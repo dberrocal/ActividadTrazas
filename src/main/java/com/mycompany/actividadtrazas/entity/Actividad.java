@@ -28,9 +28,11 @@ import javax.persistence.Table;
 @Table(name = "actividad")
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Actividad.Niveles", query = "SELECT a FROM Actividad a")
+    @NamedQuery(name = "Actividad.Todos", query = "SELECT a FROM Actividad a"),
+    @NamedQuery(name = "Actividad.Niveles", query = "SELECT a FROM Actividad a WHERE a.nivel = :nivel")
 })
 public class Actividad implements Serializable {
+    public static final String TODOS = "Actividad.Todos";
     public static final String NIVELES = "Actividad.Niveles";
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

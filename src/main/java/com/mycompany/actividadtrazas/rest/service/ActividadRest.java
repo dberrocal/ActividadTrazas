@@ -15,6 +15,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -33,14 +34,14 @@ public class ActividadRest {
     @Path("nivel")
     @Produces(value = MediaType.APPLICATION_JSON)
     public Response getNivelListado(){
-        return Response.ok(bean.getActividades().getJsonArray("nivel"), MediaType.APPLICATION_JSON).build();
+        return Response.ok(bean.getActividades(null).getJsonArray("nivel"), MediaType.APPLICATION_JSON).build();
     }
     
     @GET
     @Path("actividad")
     @Produces(value = MediaType.APPLICATION_JSON)
-    public Response getActividadListado(){
-        return Response.ok(bean.getActividades().getJsonArray("actividad"), MediaType.APPLICATION_JSON).build();
+    public Response getActividadListado(@QueryParam("Nivel") String nivel){
+        return Response.ok(bean.getActividades(nivel).getJsonArray("actividad"), MediaType.APPLICATION_JSON).build();
     }
     
     @GET
@@ -54,8 +55,8 @@ public class ActividadRest {
     @Path("validar/{actividad}")
     @Consumes(value = MediaType.APPLICATION_JSON)
     @Produces(value = MediaType.APPLICATION_JSON)
-    public Response getActividadValidar(@PathParam("actividad") Long actividad, List<RespuestaActividad> listado){        
-        return Response.ok("ok", MediaType.APPLICATION_JSON).build();
+    public Response getActividadValidar(@PathParam("actividad") Long actividad, List<RespuestaActividad> listado){                
+        return Response.ok(bean.Validar(actividad, listado), MediaType.APPLICATION_JSON).build();
     }
     
     
