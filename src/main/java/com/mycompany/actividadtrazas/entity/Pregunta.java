@@ -11,12 +11,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  *
  * @author Daniel
  */
+@Table(name = "pregunta")
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Pregunta.Validar", query = "SELECT a FROM Pregunta a WHERE a.id = :id AND a.respuesta = :respuesta")
+})
 public class Pregunta implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

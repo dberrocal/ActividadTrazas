@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -88,10 +89,14 @@ public class ActividadBeans implements Serializable{
         return jarray.build();
     }
         
-    public JsonObject getActividades(){
+    public JsonObject getActividades(String nv){
         
         EntityManager em = emf.createEntityManager();        
-        List<Actividad> actividad = em.createNamedQuery(Actividad.NIVELES,Actividad.class).getResultList();                        
+        List<Actividad> actividad = null;
+        if(nv == null)
+            actividad = em.createNamedQuery(Actividad.TODOS,Actividad.class).getResultList();                        
+        else
+            actividad = em.createNamedQuery(Actividad.NIVELES,Actividad.class).setParameter("nivel", nv).getResultList();                        
         
         //List<String> listado = actividad.stream().map(Actividad::getNivel).distinct().collect(toList());
         JsonArrayBuilder jarray = Json.createArrayBuilder();
@@ -129,13 +134,12 @@ public class ActividadBeans implements Serializable{
         return json.build();
     }
     
-    public JsonArray Validar(Long id,List<RespuestaActividad> listado){
-        EntityManager em = emf.createEntityManager();        
-        JsonArrayBuilder jarray = Json.createArrayBuilder();
-        Actividad actividad = em.find(Actividad.class, id);
-        actividad.getPregunta().forEach((pregunta)->{
-            
-        });
-        return jarray.build();
+    public List<RespuestaActividad> Validar(Long id,List<RespuestaActividad> listado){
+        EntityManager em = emf.createEntityManager();                        
+        for(RespuestaActividad r : listado){
+            Pregunta p = em.find(Pregunta.class, r.getPregunta());
+            r.setValido(p.getRespuesta().equalsIgnoreCase(r.getRespuesta()));                        
+        }        
+        return listado;
     }
 }
