@@ -14,7 +14,8 @@ Actividad.appConst ={
     template: "",
     urlGetActividad:"http://localhost:8080/ActividadTrazas/webresources/actividad/actividad",
     urlGetNivel:"http://localhost:8080/ActividadTrazas/webresources/actividad/nivel",
-    
+    urlGetActividadByID : "http://localhost:8080/ActividadTrazas/webresources/actividad/actividadByID/",
+    urlGetValidarActividad: "http://localhost:8080/ActividadTrazas/webresources/actividad/validar/"
 }
 
 Actividad.controls ={
@@ -122,34 +123,55 @@ Actividad.controls ={
      
      var actividadID=   $("#Actividad").data("kendoDropDownList").value();
         
-        var data =[
-            {id:1, pregunta:'She loves him. He ESPACIO' , respuesta:'is loved'},
-            {id:2, pregunta:'They never used the computer.The computer  ESPACIO' , respuesta:'was never used'},
-            {id:3, pregunta:'I have lost my keys.My keys  ESPACIO' , respuesta:'have been lost'}
-            
-        ];
         
         
-                     for (i = 0; i < data.length; i++) {
+        General.Service.Get(Actividad.appConst.urlGetActividadByID + actividadID ,
+        function (data){
+            console.log(data);
+                 for (i = 0; i < data.length; i++) {
                          
-                         if (data[i].pregunta.indexOf("ESPACIO")>=0){
+                         if (data[i].descripcion.indexOf("ESPACIO")>=0){
                          
-                            var newpregunta = data[i].pregunta.replace("ESPACIO", "<input type='text' placeholder='Respuesta'  id='" +data[i].id + "'/>");
-                             $( "#FormActividad" ).append( "<lalbel> "+ (i + 1) + ". </label>  <label id='" + data[i].id+ "'> " +newpregunta + " </label>"  + "<span class='RespuestaCorrecta' style='display:none'> "+ data[i].respuesta +" </span>"+ "<p> </p>");                             
+                            var newpregunta = data[i].descripcion.replace("ESPACIO", "<input type='text' placeholder='Respuesta'  id='" +data[i].id + "'/>");
+                             $( "#FormActividad" ).append( "<lalbel> "+ (i + 1) + ". </label>  <label id='" + data[i].id+ "'> " +newpregunta + " </label>"  + "<input type='text style='display:none' id='respuesta"+ data[i].id + "'/>"+ "<p> </p>");                             
                             
                          }
                    }
                     $( "#FormActividad" ).append( " <input type='submit' value='Validar' class='button' id ='Validar' onclick='ValidarActividad()' />") ;
                     $( "#FormActividad" ).append( " <input type='submit' value='Ver respuestas' class='button' id ='VerRespuestas' onclick='VerRespuestas()' />") ;
+            
+        },
+        function (data){
+            General.controls.ShowMessge("Ocurrio un error al consultar las pregunras de la actividad"+ data);
+                console.log(data);
+            }, null)
+//        var data =[
+//            {id:1, pregunta:'She loves him. He ESPACIO' , respuesta:'is loved'},
+//            {id:2, pregunta:'They never used the computer.The computer  ESPACIO' , respuesta:'was never used'},
+//            {id:3, pregunta:'I have lost my keys.My keys  ESPACIO' , respuesta:'have been lost'}
+//            
+//        ];
+//        
+        
+                
   }
   
   ValidarActividad = function (){
       
+      var actividadID=   $("#Actividad").data("kendoDropDownList").value();
       var result = [];
       $("#FormActividad input[type='text']").each(function(){
-        result.push({PreguntaID : $(this).attr('id'), RespuestaEst : $(this).val()});
+        result.push({pregunta : parseInt($(this).attr('id')), respuesta : $(this).val()});
       });
-     console.log(result);
+      
+      General.Service.SendPost(Actividad.appConst.urlGetValidarActividad + actividadID, result,
+      function(data){
+          console.log(data);
+      },
+      function (data){
+          console.log(data);
+      })
+     //console.log(result);
   
   }
   
@@ -158,23 +180,22 @@ Actividad.controls ={
      
       //actividadid
       var data =[
-            { preguntaID:1, respuesta:'is loved'},
+            { preguntaID:1 , respuesta:'is loved'},
             { preguntaID:2 , respuesta:'was never used'},
             { preguntaID:3 , respuesta:'have been lost'}
             
         ];
         
         for (i = 0; i < data.length; i++) {
-            $("#FormActividad label").each(function(){
-                console.log(data[i].preguntaID);
-                console.log($(this).attr('id'));
+            $("#FormActividad input[type='text']").each(function(){
+             
                 if(data[i].preguntaID == $(this).attr('id')){
                     
-                    if(data[i].respuesta == $(this).val()){
-                      $( "#FormActividad" ).append( "ok") ;                                  
-                     }else{
-                         console.log("Respuesta " + data[i].respuesta + "pregunta" + data[i].pregunta  +"respuesta estudiante" + $(this).val() )
-                     }
+                    //if(data[i].respuesta == $(this).val()){
+                      $( "#respuesta"+ data[i].preguntaID ).val(data[i].respuesta)
+//                     }else{
+//                         console.log("Respuesta " + data[i].respuesta + "pregunta" + data[i].preguntaID  +"respuesta estudiante" + $(this).val() )
+//                     }
 //  $( "#FormActividad" ).append( "aaaa") ;
                 }
             });

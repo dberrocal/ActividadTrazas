@@ -45,7 +45,7 @@ public class ActividadRest {
     }
     
     @GET
-    @Path("pregunta/{id}")
+    @Path("actividadByID/{id}")
     @Produces(value = MediaType.APPLICATION_JSON)
     public Response getActividadPreguntaListado(@PathParam("id") Long id){
         return Response.ok(bean.getPreguntas(id), MediaType.APPLICATION_JSON).build();
