@@ -8,7 +8,6 @@ package com.mycompany.actividadtrazas.beans;
 import com.mycompany.actividadtrazas.entity.Actividad;
 import com.mycompany.actividadtrazas.entity.Pregunta;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +20,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -70,6 +70,20 @@ public class ActividadBeans implements Serializable{
         actividad2.setPregunta(lista);
         em.persist(actividad2);
         em.getTransaction().commit();
+    }
+    
+    public JsonArray getPreguntas(Long actividadId){
+        EntityManager em = emf.createEntityManager();        
+        Actividad actividad = em.find(Actividad.class, actividadId);
+        JsonArrayBuilder jarray = Json.createArrayBuilder();
+        actividad.getPregunta().forEach((p)->{
+            JsonObjectBuilder json_actividad = Json.createObjectBuilder();
+            json_actividad.add("id", p.getId());
+            json_actividad.add("descripcion", p.getDescripcion());
+            json_actividad.add("respuesta", p.getRespuesta());
+            jarray.add(json_actividad);
+        });
+        return jarray.build();
     }
         
     public JsonObject getActividades(){

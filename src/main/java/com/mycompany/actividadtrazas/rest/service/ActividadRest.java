@@ -43,12 +43,19 @@ public class ActividadRest {
         return Response.ok(bean.getActividades().getJsonArray("actividad"), MediaType.APPLICATION_JSON).build();
     }
     
+    @GET
+    @Path("pregunta/{id}")
+    @Produces(value = MediaType.APPLICATION_JSON)
+    public Response getActividadPreguntaListado(@PathParam("id") Long id){
+        return Response.ok(bean.getPreguntas(id), MediaType.APPLICATION_JSON).build();
+    }
+    
     @POST
-    @Path("validar/:actividad")
+    @Path("validar/{actividad}")
     @Consumes(value = MediaType.APPLICATION_JSON)
     @Produces(value = MediaType.APPLICATION_JSON)
     public Response getActividadValidar(@PathParam("actividad") Long actividad, List<RespuestaActividad> listado){        
-        return Response.ok("", MediaType.APPLICATION_JSON).build();
+        return Response.ok("ok", MediaType.APPLICATION_JSON).build();
     }
     
     
