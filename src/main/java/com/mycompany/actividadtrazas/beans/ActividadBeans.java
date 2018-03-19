@@ -7,7 +7,9 @@ package com.mycompany.actividadtrazas.beans;
 
 import com.mycompany.actividadtrazas.entity.Actividad;
 import com.mycompany.actividadtrazas.entity.Pregunta;
+import com.mycompany.actividadtrazas.entity.RespuestaActividad;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -89,17 +91,17 @@ public class ActividadBeans implements Serializable{
     public JsonObject getActividades(){
         
         EntityManager em = emf.createEntityManager();        
-        List<Actividad> actividad = em.createNamedQuery(Actividad.NIVELES,Actividad.class).getResultList();
-                
-        System.out.println(actividad.size());
+        List<Actividad> actividad = em.createNamedQuery(Actividad.NIVELES,Actividad.class).getResultList();                        
         
-        List<String> listado = actividad.stream().map(Actividad::getNivel).distinct().collect(toList());
+        //List<String> listado = actividad.stream().map(Actividad::getNivel).distinct().collect(toList());
+        JsonArrayBuilder jarray = Json.createArrayBuilder();
+        actividad.stream().map(Actividad::getNivel).distinct().forEach((nivel)->{
+            jarray.add(Json.createObjectBuilder().add("id", nivel).add("descripcion", nivel));
+        });
         
         //Map<String,List<Actividad>> listado = actividad.stream().collect(groupingBy(Actividad::getNivel));
         JsonObjectBuilder json = Json.createObjectBuilder();
-        
-        JsonArrayBuilder jarray = Json.createArrayBuilder();
-        listado.forEach(jarray::add);
+                        
         json.add("nivel", jarray);
         
         JsonArrayBuilder j_array = Json.createArrayBuilder();
@@ -127,6 +129,13 @@ public class ActividadBeans implements Serializable{
         return json.build();
     }
     
-    public void Validar(Long actividad){
+    public JsonArray Validar(Long id,List<RespuestaActividad> listado){
+        EntityManager em = emf.createEntityManager();        
+        JsonArrayBuilder jarray = Json.createArrayBuilder();
+        Actividad actividad = em.find(Actividad.class, id);
+        actividad.getPregunta().forEach((pregunta)->{
+            
+        });
+        return jarray.build();
     }
 }
