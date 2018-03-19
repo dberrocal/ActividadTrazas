@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 
+import com.mycompany.actividadtrazas.entity.Pregunta;
+import java.util.Arrays;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
@@ -37,6 +40,23 @@ public class ConecinJunitTest {
     public void testConexion() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("DB");
         Assert.assertTrue(emf.isOpen());
+    }
+    
+    @Test
+    public void testInsertInto() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("DB");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        for(Pregunta p : Arrays.asList(
+                new Pregunta("", "", ""),
+                new Pregunta("", "", ""),
+                new Pregunta("", "", ""),
+                new Pregunta("", "", ""),
+                new Pregunta("", "", ""))){
+            em.persist(p);
+            System.out.println(p.getId());
+        }
+        em.getTransaction().commit();
     }
 }
 
