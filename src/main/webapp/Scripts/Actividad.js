@@ -12,6 +12,9 @@ Actividad.appConst ={
     UriGet: "",
     strOnChangeEvent: "",
     template: "",
+    urlGetActividad:"http://localhost:8080/ActividadTrazas/webresources/actividad/actividad",
+    urlGetNivel:"http://localhost:8080/ActividadTrazas/webresources/actividad/nivel",
+    
 }
 
 Actividad.controls ={
@@ -49,7 +52,7 @@ Actividad.controls ={
             });
     },
     
-      SetDropDownActividadXNivel: function (elementId, elementIdCascade, dataNivel,dataActividad) {
+      SetDropDownActividadXNivel: function (elementId, elementIdCascade) {
 
         
         $("#" + elementId).kendoDropDownList({
@@ -57,54 +60,54 @@ Actividad.controls ={
             dataTextField: "text",
             dataValueField: "value",
             filter: "contains",
-            dataSource: dataNivel,
-//            dataSource: {
-//            
-//                transport: {
-//                    read:
-//                        {
-//                            url: FC_Estaciones.appConst.UriGetEstacionesList + '?onlydistracom_ci=true',
-//                            type: "GET",
-//                            contentType: "application/json; charset=utf-8",
-//                            dataType: "json",
-//                             
-//                        }
-//                },
-//                
-//
-//            },
+        //    dataSource: dataNivel,
+            dataSource: {
+            
+                transport: {
+                    read:
+                        {
+                            url: Actividad.appConst.urlGetNivel,
+                            type: "GET",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                             
+                        }
+                },
+                
+
+            },
             cascade: function () {
                 $("#" + elementIdCascade).kendoDropDownList({
                     autoBind: false,
                     cascadeFrom: "value",
                     optionLabel: "Seleccione una actividad",
-                    dataTextField: "text1",
-                    dataValueField: "value1",
+                    dataTextField: "descripcion",
+                    dataValueField: "id",
                     filter: "contains",
-                    dataSource: dataActividad,
-//                    dataSource: {
-//                      
-//                        transport: {
-//                            read:
-//                                {
-//                                    url: Actividad.appConst.UriGetSurtidoresByEstacionID,
-//                                    type: "GET",
-//                                    contentType: "application/json; charset=utf-8",
-//                                    dataType: "json",
-//                                    data: function () {
-//
-//                                        var estacionID = $("#"+ elementId).data("kendoDropDownList");
-//                                        return { EstacionID: estacionID.value() };
-//                                    }
-//                                }
-//                        },
-//                        schema: {
-//                            data: function (data) { //specify the array that contains the data
-//                                return data.data || data;
-//                            }
-//                        }
-//
-//                    }
+               //     dataSource: dataActividad,
+                    dataSource: {
+                      
+                        transport: {
+                            read:
+                                {
+                                    url: Actividad.appConst.urlGetActividad,
+                                    type: "GET",
+                                    contentType: "application/json; charset=utf-8",
+                                    dataType: "json",
+                                    data: function () {
+
+                                        var nivel1 = $("#"+ elementId).data("kendoDropDownList");
+                                        return { nivel1: nivel.value() };
+                                    }
+                                }
+                        },
+                        schema: {
+                            data: function (data) { //specify the array that contains the data
+                                return data.data || data;
+                            }
+                        }
+
+                    }
                 });
 
             }
@@ -153,14 +156,16 @@ Actividad.controls ={
   }
   
   VerRespuestas = function (){
+      
+     
       //actividadid
-      var data =[
-            { preguntaID:1, respuesta:'is loved'},
-            { preguntaID:2 , respuesta:'was never used'},
-            { preguntaID:3 , respuesta:'have been lost'}
-            
-        ];
-        
+//      var data =[
+//            { preguntaID:1, respuesta:'is loved'},
+//            { preguntaID:2 , respuesta:'was never used'},
+//            { preguntaID:3 , respuesta:'have been lost'}
+//            
+//        ];
+//        
         for (i = 0; i < data.length; i++) {
             $("#FormActividad label").each(function(){
                 console.log(data[i].preguntaID);

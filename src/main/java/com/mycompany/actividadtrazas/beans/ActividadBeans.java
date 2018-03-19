@@ -60,13 +60,13 @@ public class ActividadBeans implements Serializable{
         }
         Actividad actividad = new Actividad();
         actividad.setDescripcion("Act-01");
-        actividad.setNivel("N1");
+        actividad.setNivel("B1");
         actividad.setPregunta(lista);
         em.persist(actividad);
         
         Actividad actividad2 = new Actividad();
         actividad2.setDescripcion("Act-02");
-        actividad2.setNivel("N2");
+        actividad2.setNivel("B2");
         actividad2.setPregunta(lista);
         em.persist(actividad2);
         em.getTransaction().commit();

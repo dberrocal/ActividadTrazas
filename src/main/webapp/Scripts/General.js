@@ -54,5 +54,26 @@ General.controls ={
         windowMss.open();
     },
 
-
+ServiceGet: function (urlService, methodOk, pMethodFailure, pAsync) {
+     
+            try {
+                var methodFailure = pMethodFailure;// || FuelControl.util.DefaultMethodFailure;
+                $.ajax({
+                    type: "GET",
+                    url: urlService,
+                    async: pAsync,
+                    dataType: 'json',
+                    success: methodOk,
+                    error: methodFailure,
+                    contentType: 'application/json; charset=utf-8',
+                    headers: {
+                        "Authorization": "Basic " + btoa($("#NombreDeUsuario").text())
+                    },
+                });
+            }
+            catch (err) {
+                General.util.ShowMessge(err.message, 'error');
+            }
+            
+}
 }
