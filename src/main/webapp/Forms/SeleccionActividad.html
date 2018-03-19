@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Start Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="../css/boostrap/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/Login.css" rel="stylesheet" type="text/css"/>   
+        <link href="../css/boostrap/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.1.221/styles/kendo.common-material.min.css" />
+        <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.1.221/styles/kendo.material.min.css" />
+        <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.1.221/styles/kendo.material.mobile.min.css" />
+    
+        <script src="../Scripts/Actividad.js" type="text/javascript"></script>
+        <script src="../Scripts/Login.js" type="text/javascript"></script>
+        <script src="../Scripts/General.js" type="text/javascript"></script>
+        <script src="../Scripts/jQuery/jquery-2.1.4.js" type="text/javascript"></script>
+        <script src="../Scripts/jQuery/jquery-2.1.4.min.js" type="text/javascript"></script>
+        <script src="../Scripts/jQuery/jquery-2.2.3.js" type="text/javascript"></script>
+        <script src="../Scripts/jQuery/jquery-2.2.3.min.js" type="text/javascript"></script>
+        <script src="https://kendo.cdn.telerik.com/2018.1.221/js/kendo.all.min.js"></script>
+  
+ 
+    </head>
+    <body>
+        <div class="container" id='Seleccion'>
+            <div class="flat-form">
+                <h2>Actividad </h2>
+
+                <div>        
+        <!--        <div  class="jumbotron">-->
+                    <h5>Seleccione el nivel y la actividad a realizar</h5>
+                    <br>
+                      <form onsubmit="return false">
+                        <ul>
+                            <li>
+                                <input type="text" placeholder="Nivel" id="Nivel" />
+                            </li>
+                            <li>
+                                <input type="text" placeholder="Actividad" id="Actividad" />
+                            </li>
+                            <li>
+                                <input type="submit" value="Buscar" class="button" id ="Buscar" onclick="BuscarActividad()" />
+                            </li>
+                        </ul>
+                      </form>
+
+                </div>
+            </div>
+        </div>
+        
+        <div id="FormActividad">
+            
+            
+        </div>
+        <script>
+$(document).ready(function () {
+  //your code here
+  
+
+
+    var dataNivel = [
+                        { text: "B1", value: "B1" },
+                        { text: "B2", value: "B2" },
+                        { text: "C1", value: "C1" }
+                    ];
+                    
+                    
+                    var dataActividad = [
+                        { text1: "Actividad 1", value1: 1 , value: "B1"},
+                        { text1: "Actividad 2", value1: 2 , value: "B1"},
+                        { text1: "Actividad 3", value1: 3, value: "B1" }
+                    ];
+                    
+                    
+    Actividad.controls.SetDropDownActividadXNivel("Nivel","Actividad",dataNivel,dataActividad);
+    
+
+});
+</script>  
+    </body>
+</html>
