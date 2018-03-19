@@ -1,6 +1,6 @@
 
 var Login = {
-    about: 'Versión 1.0 | Developer: Elker Hernandez',
+    about: 'Versión 1.0 | Developer: Alicia',
     formConst: {},
     util: {}
 }

@@ -53,6 +53,69 @@ General.controls ={
         windowMss.center();
         windowMss.open();
     },
+    }
+    
+   General.Service={
+    Get: function (urlService, methodOk, pMethodFailure, pAsync) {
 
+                try {
+                    var methodFailure = pMethodFailure;// || FuelControl.util.DefaultMethodFailure;
+                    $.ajax({
+                        type: "GET",
+                        url: urlService,
+                        async: pAsync,
+                        dataType: 'json',
+                        success: methodOk,
+                        error: methodFailure,
+                        contentType: 'application/json; charset=utf-8',
+                        headers: {
+                            "Authorization": "Basic " + btoa($("#NombreDeUsuario").text())
+                        },
+                    });
+                }
+                catch (err) {
+                    General.util.ShowMessge(err.message, 'error');
+                }
 
+    },
+    
+    Post: function (urlService, methodOk, pMethodFailure) {
+            try {
+                var methodFailure = pMethodFailure;// || FuelControl.util.DefaultMethodFailure;
+                $.ajax({
+                    type: "POST",
+                    url: urlService,
+                    dataType: "json",
+                    success: methodOk,
+                    error: methodFailure,
+//                    headers: {
+//                        "Authorization": "Basic " + btoa($("#NombreDeUsuario").text())
+//                    },
+                });
+            }
+            catch (err) {
+                General.util.ShowMessge(err.message, 'error');
+            }
+        },
+        SendPost: function (urlService, pData, methodOk, pMethodFailure) {
+            try {
+                var methodFailure = pMethodFailure// || FuelControl.util.DefaultMethodFailure;
+                //console.log(JSON.stringify(pData));
+                $.ajax({
+                    type: "POST",
+                    url: urlService,
+                    dataType: "json1",
+                    success: methodOk,
+                    error: methodFailure,
+                    data: JSON.stringify(pData),
+//                    headers: {
+//                        "Authorization": "Basic " + btoa($("#NombreDeUsuario").text())
+//                    },
+                    contentType: "application/json; charset=utf-8",
+                });
+            }
+            catch (err) {
+                General.util.ShowMessge(err.message, 'error');
+            }
+        },
 }
