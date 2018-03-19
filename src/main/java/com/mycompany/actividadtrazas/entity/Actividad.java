@@ -7,14 +7,18 @@ package com.mycompany.actividadtrazas.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -23,7 +27,11 @@ import javax.persistence.Table;
  */
 @Table(name = "actividad")
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Actividad.Niveles", query = "SELECT a FROM Actividad a")
+})
 public class Actividad implements Serializable {
+    public static final String NIVELES = "Actividad.Niveles";
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
@@ -31,7 +39,7 @@ public class Actividad implements Serializable {
     private String descripcion;
     @Column
     private String nivel;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     @JoinTable(
             name = "actividad_pregunta",
             joinColumns = @JoinColumn(name = "actividad_id"),
@@ -63,11 +71,11 @@ public class Actividad implements Serializable {
         return nivel;
     }
 
-    public void setPregnta(List<Pregunta> pregunta) {
+    public void setPregunta(List<Pregunta> pregunta) {
         this.pregunta = pregunta;
     }
 
-    public List<Pregunta> getPregnta() {
+    public List<Pregunta> getPregunta() {
         return pregunta;
     }
     

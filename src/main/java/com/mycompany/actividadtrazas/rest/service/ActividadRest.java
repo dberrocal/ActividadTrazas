@@ -6,9 +6,18 @@
 package com.mycompany.actividadtrazas.rest.service;
 
 import com.mycompany.actividadtrazas.beans.ActividadBeans;
+import com.mycompany.actividadtrazas.entity.RespuestaActividad;
+import java.util.List;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 
 /**
  *
@@ -18,12 +27,36 @@ import javax.ws.rs.Path;
 public class ActividadRest {
     
     @Inject
-    private ActividadBeans bean;
+    private ActividadBeans bean;        
     
     @GET
-    @Path("nombre")
-    public String getNombre(){
-        bean.getActividad();
-        return "ok";
+    @Path("nivel")
+    @Produces(value = MediaType.APPLICATION_JSON)
+    public Response getNivelListado(){
+        return Response.ok(bean.getActividades().getJsonArray("nivel"), MediaType.APPLICATION_JSON).build();
     }
+    
+    @GET
+    @Path("actividad")
+    @Produces(value = MediaType.APPLICATION_JSON)
+    public Response getActividadListado(){
+        return Response.ok(bean.getActividades().getJsonArray("actividad"), MediaType.APPLICATION_JSON).build();
+    }
+    
+    @GET
+    @Path("pregunta/{id}")
+    @Produces(value = MediaType.APPLICATION_JSON)
+    public Response getActividadPreguntaListado(@PathParam("id") Long id){
+        return Response.ok(bean.getPreguntas(id), MediaType.APPLICATION_JSON).build();
+    }
+    
+    @POST
+    @Path("validar/{actividad}")
+    @Consumes(value = MediaType.APPLICATION_JSON)
+    @Produces(value = MediaType.APPLICATION_JSON)
+    public Response getActividadValidar(@PathParam("actividad") Long actividad, List<RespuestaActividad> listado){        
+        return Response.ok("ok", MediaType.APPLICATION_JSON).build();
+    }
+    
+    
 }
