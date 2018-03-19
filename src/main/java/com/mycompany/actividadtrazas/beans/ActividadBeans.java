@@ -54,10 +54,10 @@ public class ActividadBeans implements Serializable{
         List<Pregunta> lista = new ArrayList<>();
         em.getTransaction().begin();
         for(Pregunta p : Arrays.asList(
-                new Pregunta("Alberto ESPACIO (drive) to school bus everyday","","") ,
-                new Pregunta("Sandy ESPACIO (forget) her homework very often.","",""),
-                new Pregunta("Sandy ESPACIO (forget) her homework very often.","",""),
-                new Pregunta("Sandy ESPACIO (forget) her homework very often.","",""))){            
+                new Pregunta("Alberto ESPACIO (drive) to school bus everyday","A","") ,
+                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A",""),
+                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A",""),
+                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A",""))){            
             //em.persist(p);
             lista.add(p);
         }

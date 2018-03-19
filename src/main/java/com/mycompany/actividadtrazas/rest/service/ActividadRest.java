@@ -48,6 +48,7 @@ public class ActividadRest {
     @Path("pregunta/{id}")
     @Produces(value = MediaType.APPLICATION_JSON)
     public Response getActividadPreguntaListado(@PathParam("id") Long id){
+        //Inicializa tiempo de actividad
         return Response.ok(bean.getPreguntas(id), MediaType.APPLICATION_JSON).build();
     }
     
