@@ -1,6 +1,6 @@
 
 var Actividad = {
-    about: 'Versión 1.0 | Developer: Elker Hernandez',
+    about: 'Versión 1.0 | Developer: Alicia',
     formConst: {},
     util: {}
 }
@@ -121,6 +121,64 @@ Actividad.controls ={
      
      var actividadID=   $("#Actividad").data("kendoDropDownList").value();
         
+        var data =[
+            {id:1, pregunta:'She loves him. He ESPACIO' , respuesta:'is loved'},
+            {id:2, pregunta:'They never used the computer.The computer  ESPACIO' , respuesta:'was never used'},
+            {id:3, pregunta:'I have lost my keys.My keys  ESPACIO' , respuesta:'have been lost'}
+            
+        ];
         
-        $( "#FormActividad" ).append( "<p>Test</p>  <input type='text' placeholder='Nivel' id='Nivel' />" );
+        
+                     for (i = 0; i < data.length; i++) {
+                         
+                         if (data[i].pregunta.indexOf("ESPACIO")>=0){
+                         
+                            var newpregunta = data[i].pregunta.replace("ESPACIO", "<input type='text' placeholder='Respuesta'  id='" +data[i].id + "'/>");
+                             $( "#FormActividad" ).append( "<lalbel> "+ (i + 1) + ". </label>  <label id='" + data[i].id+ "'> " +newpregunta + " </label>"  + "<span class='RespuestaCorrecta' style='display:none'> "+ data[i].respuesta +" </span>"+ "<p> </p>");                             
+                            
+                         }
+                   }
+                    $( "#FormActividad" ).append( " <input type='submit' value='Validar' class='button' id ='Validar' onclick='ValidarActividad()' />") ;
+                    $( "#FormActividad" ).append( " <input type='submit' value='Ver respuestas' class='button' id ='VerRespuestas' onclick='VerRespuestas()' />") ;
+  }
+  
+  ValidarActividad = function (){
+      
+      var result = [];
+      $("#FormActividad input[type='text']").each(function(){
+        result.push({PreguntaID : $(this).attr('id'), RespuestaEst : $(this).val()});
+      });
+     console.log(result);
+  
+  }
+  
+  VerRespuestas = function (){
+      //actividadid
+      var data =[
+            { preguntaID:1, respuesta:'is loved'},
+            { preguntaID:2 , respuesta:'was never used'},
+            { preguntaID:3 , respuesta:'have been lost'}
+            
+        ];
+        
+        for (i = 0; i < data.length; i++) {
+            $("#FormActividad label").each(function(){
+                console.log(data[i].preguntaID);
+                console.log($(this).attr('id'));
+                if(data[i].preguntaID == $(this).attr('id')){
+
+                }
+            });
+        }
+    
+//      $("#FormActividad span").each(function(){
+//        $(".RespuestaCorrecta").show();
+//      });
+//      
+//      $("#FormActividad input[type='text']").each(function(){
+//        $("input[type='text']").css("")
+//      });
+     //console.log(result);
+          
+      
   }
