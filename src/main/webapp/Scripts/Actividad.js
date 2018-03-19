@@ -57,8 +57,8 @@ Actividad.controls ={
         
         $("#" + elementId).kendoDropDownList({
             optionLabel: "Seleccione un nivel",
-            dataTextField: "text",
-            dataValueField: "value",
+            dataTextField: "Nivel",
+            dataValueField: "NivelID",
             filter: "contains",
         //    dataSource: dataNivel,
             dataSource: {
@@ -73,16 +73,14 @@ Actividad.controls ={
                              
                         }
                 },
-                
-
             },
             cascade: function () {
                 $("#" + elementIdCascade).kendoDropDownList({
                     autoBind: false,
-                    cascadeFrom: "value",
+                    cascadeFrom: "NivelID",
                     optionLabel: "Seleccione una actividad",
-                    dataTextField: "descripcion",
-                    dataValueField: "id",
+                    dataTextField: "Descripcion",
+                    dataValueField: "ActividadID",
                     filter: "contains",
                //     dataSource: dataActividad,
                     dataSource: {
@@ -96,8 +94,8 @@ Actividad.controls ={
                                     dataType: "json",
                                     data: function () {
 
-                                        var nivel1 = $("#"+ elementId).data("kendoDropDownList");
-                                        return { nivel1: nivel.value() };
+                                        var nivel = $("#"+ elementId).data("kendoDropDownList");
+                                        return { Nivel: nivel.value() };
                                     }
                                 }
                         },
@@ -159,19 +157,25 @@ Actividad.controls ={
       
      
       //actividadid
-//      var data =[
-//            { preguntaID:1, respuesta:'is loved'},
-//            { preguntaID:2 , respuesta:'was never used'},
-//            { preguntaID:3 , respuesta:'have been lost'}
-//            
-//        ];
-//        
+      var data =[
+            { preguntaID:1, respuesta:'is loved'},
+            { preguntaID:2 , respuesta:'was never used'},
+            { preguntaID:3 , respuesta:'have been lost'}
+            
+        ];
+        
         for (i = 0; i < data.length; i++) {
             $("#FormActividad label").each(function(){
                 console.log(data[i].preguntaID);
                 console.log($(this).attr('id'));
                 if(data[i].preguntaID == $(this).attr('id')){
-
+                    
+                    if(data[i].respuesta == $(this).val()){
+                      $( "#FormActividad" ).append( "ok") ;                                  
+                     }else{
+                         console.log("Respuesta " + data[i].respuesta + "pregunta" + data[i].pregunta  +"respuesta estudiante" + $(this).val() )
+                     }
+//  $( "#FormActividad" ).append( "aaaa") ;
                 }
             });
         }
