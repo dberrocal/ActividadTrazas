@@ -21,6 +21,7 @@ import static java.util.stream.Collectors.toList;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -40,9 +41,11 @@ import javax.persistence.PersistenceUnit;
 @ApplicationScoped
 public class ActividadBeans implements Serializable{
     
-    @PersistenceUnit(name = "DB")
-    //@PersistenceContext(name = "DB")
+    @PersistenceUnit(name = "DB")    
     private EntityManagerFactory emf;
+    
+    @Inject
+    private TrazaBean tzean;
     
     @PostConstruct
     public void init(){
@@ -140,6 +143,9 @@ public class ActividadBeans implements Serializable{
             Pregunta p = em.find(Pregunta.class, r.getPregunta());
             r.setValido(p.getRespuesta().equalsIgnoreCase(r.getRespuesta()));                        
         }        
+        
+        tzean.TrazaIntento("10000", 1L, listado);
+        
         return listado;
     }
 }
