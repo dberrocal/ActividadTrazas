@@ -32,13 +32,13 @@
                     <br>
                       <form onsubmit="return false">
                         <ul>
-                            <li>
-                                <input type="text" placeholder="Nivel" id="Nivel" />
+                            <li class="li-form">
+                                <input type="text" placeholder="Nivel" id="Nivel"  style="width: 60%"/>
                             </li>
-                            <li>
-                                <input type="text" placeholder="Actividad" id="Actividad" />
+                            <li class="li-form">
+                                <input type="text" placeholder="Actividad" id="Actividad"  style="width: 60%"/>
                             </li>
-                            <li>
+                            <li class="li-form">
                                 <input type="submit" value="Buscar" class="button" id ="Buscar" onclick="BuscarActividad()" />
                             </li>
                         </ul>
@@ -48,34 +48,13 @@
             </div>
         </div>
         
-        <div id="FormActividad">
-            
-            
+        <div id="FormActividad" class="form-inline">  
         </div>
         <script>
-$(document).ready(function () {
-  //your code here
-  
+        $(document).ready(function () {
+            Actividad.controls.SetDropDownActividadXNivel("Nivel","Actividad");
 
-
-    var dataNivel = [
-                        { text: "B1", value: "B1" },
-                        { text: "B2", value: "B2" },
-                        { text: "C1", value: "C1" }
-                    ];
-                    
-                    
-                    var dataActividad = [
-                        { text1: "Actividad 1", value1: 1 , value: "B1"},
-                        { text1: "Actividad 2", value1: 2 , value: "B1"},
-                        { text1: "Actividad 3", value1: 3, value: "B1" }
-                    ];
-                    
-                    
-    Actividad.controls.SetDropDownActividadXNivel("Nivel","Actividad");
-    
-
-});
-</script>  
+        });
+        </script>  
     </body>
 </html>
