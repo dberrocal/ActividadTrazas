@@ -3,7 +3,6 @@
 
 body {
   background: #DDDDDF;
-/*  background: #1a1a1a;*/
   color: #000000;
   font-family: 'Roboto';
   margin:0 auto;
@@ -13,30 +12,37 @@ body {
 
 }
 .container{
-margin: 0 auto;
-text-align:left;
-width:70%;
-margin-bottom: 10%;
- margin-left: 14%;
-margin-right: 10%;
-margin-top: 10%;
+  margin: 0 auto;
+  text-align:left;
+  width:70%;
+  margin-bottom: 10%;
+  margin-left: 14%;
+  margin-right: 10%;
+  margin-top: 10%;
+}
+
+.sinbordes{
+  background-color: #eee;
+  border: 0;
+}
+
+.li-form{
+    text-align: center;
+    padding: 10px;
 }
 .flat-form {
     
   background: #F4F6F7;
-/* background: #e74c3c;*/
-/*  margin: 25px auto;*/
   margin-left : auto;
-margin-right : auto;
-padding: '0px';
-  width: 390px;
-  height: 340px;
+  margin-right : auto;
+  padding: '0px';
+  width: 72%;
+  height: 400px;
   position: relative;
   font-family: 'Roboto';
 }
 .tabs {
-   background: #EDF2F2;  
-/*  background: #c0392b;*/
+  background: #EDF2F2;  
   height: 40px;
   margin: 0;
   padding: 0;
@@ -53,15 +59,14 @@ padding: '0px';
   padding: 0;
 }
 .tabs a {
-    background:  #EDF2F2;
-/*  background: #3C8BBF;*/
+  background:  #EDF2F2;
   display: block;
   float: left;
   text-decoration: none;
   color: black;
   font-size: 16px;
   padding: 12px 22px 12px 22px;
-  /*border-right: 1px solid @tab-border;*/
+  
 
 }
 .tabs li:last-child a {
@@ -144,10 +149,10 @@ form input[type=password] {
 
 .button {
     border: none;
-    display: block;
+/*    display: block;*/
     background: #3C8BBF;
     height: 40px;
-    width: 80px;
+    width: 60%;
     color: #ffffff;
     text-align: center;
     border-radius: 5px;

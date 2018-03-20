@@ -120,6 +120,7 @@ Actividad.controls ={
 
  BuscarActividad= function ()
   {
+      $("#Seleccion").hide();
      
      var actividadID=   $("#Actividad").data("kendoDropDownList").value();
         
@@ -132,10 +133,11 @@ Actividad.controls ={
                          
                          if (data[i].descripcion.indexOf("ESPACIO")>=0){
                          
-                            var newpregunta = data[i].descripcion.replace("ESPACIO", "<input type='text' placeholder='Respuesta'  id='" +data[i].id + "'/>");
-                             $( "#FormActividad" ).append( "<lalbel> "+ (i + 1) + ". </label>  <label id='" + data[i].id+ "'> " +newpregunta + " </label>"  + "<input type='text style='display:none' id='respuesta"+ data[i].id + "'/>"+ "<p> </p>");                             
+                            var newpregunta = data[i].descripcion.replace("ESPACIO", "<input  class ='form-control'type='text' placeholder='Respuesta'  id='" +data[i].id + "'/>");
+                             $( "#FormActividad" ).append( "<lalbel  class='mr-sm-12'> "+ (i + 1) + ". </label>  <label id='" + data[i].id+ "' class='mr-sm-12'> " +newpregunta + " </label>"  + "<input type='hidden' readonly class='sinbordes' style='display:none' id='respuesta"+ data[i].id + "'/>"+ "<p> </p>");                             
                             
                          }
+                         
                    }
                     $( "#FormActividad" ).append( " <input type='submit' value='Validar' class='button' id ='Validar' onclick='ValidarActividad()' />") ;
                     $( "#FormActividad" ).append( " <input type='submit' value='Ver respuestas' class='button' id ='VerRespuestas' onclick='VerRespuestas()' />") ;
@@ -187,12 +189,14 @@ Actividad.controls ={
         ];
         
         for (i = 0; i < data.length; i++) {
-            $("#FormActividad input[type='text']").each(function(){
+            $("#FormActividad input[type='hidden']").each(function(){
              
-                if(data[i].preguntaID == $(this).attr('id')){
+                if("respuesta" + data[i].preguntaID == $(this).attr('id')){
                     
                     //if(data[i].respuesta == $(this).val()){
+                      $( "#respuesta"+ data[i].preguntaID ).show();
                       $( "#respuesta"+ data[i].preguntaID ).val(data[i].respuesta)
+                      $( "#respuesta"+ data[i].preguntaID ).prop('type', 'text');
 //                     }else{
 //                         console.log("Respuesta " + data[i].respuesta + "pregunta" + data[i].preguntaID  +"respuesta estudiante" + $(this).val() )
 //                     }

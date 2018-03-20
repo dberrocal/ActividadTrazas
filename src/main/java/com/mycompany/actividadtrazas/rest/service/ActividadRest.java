@@ -16,6 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -56,8 +57,9 @@ public class ActividadRest {
     @Path("validar/{actividad}")
     @Consumes(value = MediaType.APPLICATION_JSON)
     @Produces(value = MediaType.APPLICATION_JSON)
-    public Response getActividadValidar(@PathParam("actividad") Long actividad, List<RespuestaActividad> listado){                
-        return Response.ok(bean.Validar(actividad, listado), MediaType.APPLICATION_JSON).build();
+    public Response getActividadValidar(@PathParam("actividad") Long actividad, List<RespuestaActividad> listado){    
+        GenericEntity<List<RespuestaActividad>> entity = new GenericEntity<List<RespuestaActividad>>(bean.Validar(actividad, listado)) {};
+        return Response.ok(entity, MediaType.APPLICATION_JSON).build();
     }
     
     
