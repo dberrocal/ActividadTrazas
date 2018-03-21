@@ -29,5 +29,6 @@ public class ApplicationConfig extends Application{
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {        
         resources.add(com.mycompany.actividadtrazas.rest.service.ActividadRest.class);
+        resources.add(com.mycompany.actividadtrazas.rest.service.TrazaRest.class);
     }
 }

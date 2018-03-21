@@ -9,12 +9,10 @@ import java.util.Arrays;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -47,16 +45,15 @@ public class ConecinJunitTest {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("DB");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        for(Pregunta p : Arrays.asList(
-                new Pregunta("", "", ""),
-                new Pregunta("", "", ""),
-                new Pregunta("", "", ""),
-                new Pregunta("", "", ""),
-                new Pregunta("", "", ""))){
+        for(Pregunta p : Arrays.asList(new Pregunta("", "", ""),new Pregunta("", "", ""),new Pregunta("", "", ""),new Pregunta("", "", ""),new Pregunta("", "", ""))){
             em.persist(p);
             System.out.println(p.getId());
         }
         em.getTransaction().commit();
+    }
+    
+    @Test
+    public void insertarT(){
     }
 }
 
