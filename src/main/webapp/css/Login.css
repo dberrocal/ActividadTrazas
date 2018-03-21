@@ -2,9 +2,9 @@
 @import url(http://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css);
 
 body {
-  background: #DDDDDF;
+/*  background: #DDDDDF;*/
 /*  background: #1a1a1a;*/
-  color: #000000;
+/*  color: #000000;*/
   font-family: 'Roboto';
   margin:0 auto;
   text-align: center;
@@ -12,27 +12,27 @@ body {
   background-repeat: no-repeat;
 
 }
-.container{
-margin: 0 auto;
-text-align:left;
-width:70%;
-margin-bottom: 10%;
- margin-left: 14%;
-margin-right: 10%;
-margin-top: 10%;
+.f-container-login{
+    margin: 0 auto;
+    text-align: left;
+    width: 70%;
+    margin-bottom: 10%;
+    margin-left: 14%;
+    margin-right: 10%;
+    margin-top: 5%;
 }
 .flat-form {
     
   background: #F4F6F7;
-/* background: #e74c3c;*/
-/*  margin: 25px auto;*/
   margin-left : auto;
-margin-right : auto;
-padding: '0px';
+  margin-right : auto;
+  padding: 0px;
   width: 390px;
-  height: 340px;
+  height: 456px;
   position: relative;
   font-family: 'Roboto';
+  box-shadow: 0px 0px 11px 0px rgba(144, 141, 141, 0.75);
+
 }
 .tabs {
    background: #EDF2F2;  
@@ -182,3 +182,16 @@ color: #ABB2B9;
 :-ms-input-placeholder {
   color: #e74c3c;
 }
+
+
+
+.f-btn
+{
+    width: 100%;
+}
+div#login {
+    padding-top: 39px;
+}
+/*form#Login {
+       padding: 10px 100px;
+}*/

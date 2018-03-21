@@ -133,14 +133,14 @@ Actividad.controls ={
                          
                          if (data[i].descripcion.indexOf("ESPACIO")>=0){
                          
-                            var newpregunta = data[i].descripcion.replace("ESPACIO", "<input  class ='form-control'type='text' placeholder='Respuesta'  id='" +data[i].id + "'/>");
-                             $( "#FormActividad" ).append( "<lalbel  class='mr-sm-12'> "+ (i + 1) + ". </label>  <label id='" + data[i].id+ "' class='mr-sm-12'> " +newpregunta + " </label>"  + "<input type='hidden' readonly class='sinbordes' style='display:none' id='respuesta"+ data[i].id + "'/>"+ "<p> </p>");                             
-                            
+                            var newpregunta = data[i].descripcion.replace("ESPACIO", "<input  class ='form-control f-input-question'type='text' placeholder='Respuesta'  id='" +data[i].id + "'/>");
+//                             $( "#FormActividad" ).append( "<lalbel  class='col-sm-12'> "+ (i + 1) + ". </label>  <label id='" + data[i].id+ "' class='col-sm-12'> " +newpregunta + " </label>"  + "<input type='hidden' readonly class='sinbordes' style='display:none' id='respuesta"+ data[i].id + "'/>"+ "<p> </p>");                             
+                            $( "#FormActividad" ).append( "<li><div class='content-question'> <label id='" + data[i].id+ "' class='col-sm-12'> " +newpregunta +  "<input type='hidden' readonly class='sinbordes form-control f-input-question' style='display:none' id='respuesta"+ data[i].id + "'/></label>  </div></li>"+ "<p> </p>");                             
                          }
                          
                    }
-                    $( "#FormActividad" ).append( " <input type='submit' value='Validar' class='button' id ='Validar' onclick='ValidarActividad()' />") ;
-                    $( "#FormActividad" ).append( " <input type='submit' value='Ver respuestas' class='button' id ='VerRespuestas' onclick='VerRespuestas()' />") ;
+                    $( "#FormActividad" ).append( " <div class='btn-btn-gropup'><input type='submit' value='Validar' style='margin-right: 20%;' class='button' id ='Validar' onclick='ValidarActividad()' /><input type='submit' value='Ver respuestas' class='button' id ='VerRespuestas' onclick='VerRespuestas()' /> </div>") ;
+//                    $( "#FormActividad" ).append( " <div class='col-md-6'> <div class='col-md-6 cont-col'><input type='submit' value='Ver respuestas' class='btn button' id ='VerRespuestas' onclick='VerRespuestas()' /></div></div>") ;
             
         },
         function (data){
