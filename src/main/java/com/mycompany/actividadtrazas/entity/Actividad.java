@@ -17,8 +17,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -41,13 +43,19 @@ public class Actividad implements Serializable {
     private String descripcion;
     @Column
     private String nivel;
+    @JoinColumn(name = "SECUENCIA")
+    @ManyToOne(optional = false)
+    private Secuencia sequencia;    
     @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "actividad_pregunta",
-            joinColumns = @JoinColumn(name = "actividad_id"),
-            inverseJoinColumns = {@JoinColumn(name = "pregunta_id")}
-    )
+    @JoinTable(name = "actividad_pregunta",joinColumns = @JoinColumn(name = "actividad_id"),inverseJoinColumns = {@JoinColumn(name = "pregunta_id")})
     private List<Pregunta> pregunta;
+
+    public Actividad() {
+    }   
+    
+    public Actividad(Long id) {
+        this.id = id;        
+    }        
 
     public void setId(Long id) {
         this.id = id;
@@ -80,5 +88,12 @@ public class Actividad implements Serializable {
     public List<Pregunta> getPregunta() {
         return pregunta;
     }
-    
+
+    public void setSequencia(Secuencia sequencia) {
+        this.sequencia = sequencia;
+    }
+
+    public Secuencia getSequencia() {
+        return sequencia;
+    }       
 }

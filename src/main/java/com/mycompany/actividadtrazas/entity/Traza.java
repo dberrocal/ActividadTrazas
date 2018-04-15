@@ -13,18 +13,19 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  *
@@ -33,20 +34,42 @@ import javax.persistence.Temporal;
 @Table(name = "traza")
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Traza.Todos", query = "SELECT a FROM Traza a")
+    @NamedQuery(name = "Traza.Todos", query = "SELECT a FROM Traza a JOIN a.actividad b JOIN b.sequencia c ORDER BY a.sesion,a.documento"),
+    @NamedQuery(name = "Traza.JOIN", query = "SELECT NEW com.mycompany.actividadtrazas.entity.Traza(a.id,a.fecha,a.sesion,a.documento,a.grupo,a.tipotraza,b.descripcion,c.descripcion) FROM Traza a JOIN a.actividad b JOIN b.sequencia c ORDER BY a.sesion,a.documento"),
+    @NamedQuery(name = "Traza.Fecha", query = "SELECT a FROM Traza a WHERE a.fecha BETWEEN :fechaIncial AND :fechaFinal AND a.grupo = :grupo ORDER BY a.sesion,a.documento,a.fecha")
 })
 public class Traza implements Serializable {
-    public static final String TODOS = "Traza.Todos";
+    
+    public static final String TODOS = "Traza.JOIN";
+    public static final String REPORTE = "Traza.Fecha";
+
+    public Traza(){}
+    
+    public Traza(Long id, Date fecha, String sesion, String documento, String grupo, String tipotraza, String actividadnombre, String secuencianombre) {
+        this.id = id;
+        this.fecha = fecha;
+        this.sesion = sesion;
+        this.documento = documento;
+        this.grupo = grupo;        
+        this.tipotraza = tipotraza;                
+        this.actividadnombre = actividadnombre;
+        this.secuencianombre = secuencianombre;
+    }        
+    
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
-    @Column
-    @Temporal(javax.persistence.TemporalType.DATE)
+    private Long id;    
+    @Column(nullable = false)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fecha;
     @Column
-    private String documento;
-    //@ManyToOne
+    private String sesion;
     @Column
+    private String documento;
+    @Column
+    private String grupo;
+    //@ManyToOne
+    @Transient
     private Long actividadId;    
     //private Actividad actividad;
     //@Enumerated(EnumType.STRING)
@@ -54,19 +77,25 @@ public class Traza implements Serializable {
     @Column
     private String tipotraza;
     @OneToMany(cascade = CascadeType.PERSIST,mappedBy="traza")
-    List<TrazaError> error;
+    List<TrazaError> error;    
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="ACTIVIDADID", unique=false, nullable=false, updatable=false,insertable = true)
+    Actividad actividad;
     
-    public Traza() {
-    }
+    @Transient    
+    public String actividadnombre;
+    @Transient
+    public String secuencianombre;        
 
     @PrePersist
     public void init(){
-        this.fecha = Calendar.getInstance().getTime();
+        //this.fecha = Calendar.getInstance().getTime();
     }
     
-    public Traza(String documento, Long actividad, String tipotraza) {                
+    public Traza(String sesion,String documento, Long actividad, String tipotraza) {                
+        this.sesion = sesion;
         this.documento = documento;
-        this.actividadId = actividad;
+        this.actividad = new Actividad(actividad);
         this.tipotraza = tipotraza;
     }        
 
@@ -104,7 +133,7 @@ public class Traza implements Serializable {
 
     public void setActividadId(Long actividadId) {
         this.actividadId = actividadId;
-    }
+    }        
 
     public Long getActividadId() {
         return actividadId;
@@ -123,4 +152,37 @@ public class Traza implements Serializable {
             this.error = new ArrayList<>();
         this.error.add(error);
     }
+
+    public void setSesion(String sesion) {
+        this.sesion = sesion;
+    }
+
+    public String getSesion() {
+        return sesion;
+    }        
+
+    public String getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
+    }
+
+    public String getActividadnombre() {
+        return actividadnombre;
+    }
+
+    public void setActividadnombre(String actividadnombre) {
+        this.actividadnombre = actividadnombre;
+    }
+
+    public String getSecuencianombre() {
+        return secuencianombre;
+    }
+
+    public void setSecuencianombre(String secuencianombre) {
+        this.secuencianombre = secuencianombre;
+    }
+    
 }

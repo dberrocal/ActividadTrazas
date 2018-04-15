@@ -3,19 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.actividadtrazas.entity;
+package com.mycompany.actividadtrazas.rest.service;
+
+import javax.ws.rs.Path;
 
 /**
  *
  * @author Daniel
  */
-public enum TrazaTipo {
-    INICIO,
-    FIN,
-    INTENTO,
-    ACIERTO,
+@Path("resporte")
+public class ReporteRest {
     
-    A01INIACT,//Inicio de actividad
-    A02INTACT,//Intento actividad
-    A03OKACT//OK Actividad
 }
