@@ -9,13 +9,17 @@ import com.mycompany.actividadtrazas.entity.RespuestaActividad;
 import com.mycompany.actividadtrazas.entity.Traza;
 import com.mycompany.actividadtrazas.entity.TrazaError;
 import com.mycompany.actividadtrazas.entity.TrazaTipo;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.groupingBy;
@@ -46,6 +50,7 @@ public class TrazaBean {
 
     @PersistenceUnit(name = "DB")
     private EntityManagerFactory emf;
+    private long sumMinutos = 0L;
 
     public JsonArray getTrazas() {
 
@@ -63,33 +68,41 @@ public class TrazaBean {
         keySet.forEach((documento) -> {
             List<Traza> lista = estdianteActividades.get(documento);
 
-            Map<String, List<Traza>> trazaactaividad = traza.stream()
-                    .collect(groupingBy(Traza::getActividadnombre));
+            Map<String, List<Traza>> trazaactaividad = traza.stream().collect(groupingBy(Traza::getActividadnombre));
 
             Set<String> keyActividad = trazaactaividad.keySet();
-
-            JsonArrayBuilder jsontarea = Json.createArrayBuilder();
+            
+            JsonArrayBuilder jsontarea = Json.createArrayBuilder();            
+            
             keyActividad.forEach((tarea) -> {
                 List<Traza> tmp = trazaactaividad.get(tarea);
                 Traza t01 = tmp.get(0);
-                Traza t02 = tmp.get(2);
+                Traza t02 = tmp.get(tmp.size()-1);
                 
-                LocalDate ini = t01.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                LocalDate fin = t02.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDateTime ini = t01.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+                LocalDateTime fin = t02.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
                 
-                Duration duration = Duration.between(ini.atStartOfDay(), fin.atStartOfDay());
-                jsontarea.add(
-                        Json.createObjectBuilder()
-                                .add("nombre", t01.getActividadnombre())
-                                .add("duracion", duration.getNano()));
+                Duration duration = Duration.between(ini, fin);                
+                
+                //jsontarea.add(Json.createObjectBuilder().add("nombre", t01.getActividadnombre()).add("fecha", t01.getFecha().toString()).add("duracion", duration.toMinutes()));
+                jsonrespuesta.add(Json.createObjectBuilder()
+                        .add("estudiante", documento.getNombre())
+                        .add("actividad", documento.getActividad())
+                        .add("nivel",Optional.ofNullable(documento.getNivel()).orElse("---"))
+                        .add("nombre", t01.getActividadnombre())
+                        .add("fecha", new SimpleDateFormat("YYYY/MM/dd").format(t01.getFecha()))
+                        .add("duracion", duration.toMinutes()));
+                sumMinutos += duration.toMinutes();
             });
-
+            
             JsonObjectBuilder json = Json.createObjectBuilder();
             json.add("estudiante", documento.getNombre())
                     .add("actividad", documento.getActividad())
-                    .add("nivel", "")
+                    .add("nivel",Optional.ofNullable(documento.getNivel()).orElse("---"))
+                    .add("duracion", sumMinutos)
                     .add("tareas", jsontarea.build());
-            jsonrespuesta.add(json);
+            sumMinutos = 0L;
+            //jsonrespuesta.add(json);
         });
 
         return jsonrespuesta.build();
@@ -98,23 +111,60 @@ public class TrazaBean {
     public JsonArray getTrazasReporteTiempo(String grupo, Date fechaInicial, Date fechaFinal) {
         EntityManager em = emf.createEntityManager();
         List<Traza> traza = em.createNamedQuery(Traza.REPORTE)
-                .setParameter("grupo", grupo)
-                .setParameter("fechaInicial", fechaInicial)
-                .setParameter("fechaFinal", fechaFinal)
+                //.setParameter("grupo", grupo)
+                .setParameter("fi", fechaInicial)
+                .setParameter("ff", fechaFinal)
                 .getResultList();
 
-        JsonArrayBuilder json = Json.createArrayBuilder();
+        JsonArrayBuilder jsonrespuesta = Json.createArrayBuilder();
+        
+        Map<TareaTupla, List<Traza>> estdianteActividades = traza.stream()
+                .collect(groupingBy((t) -> {
+                    return new TareaTupla(t.getDocumento(), t.getSesion(), t.getSecuencianombre());
+                }));
 
-        traza.forEach((a) -> {
-            json.add(Json.createObjectBuilder()
-                    .add("id", a.getId())
-                    .add("documento", a.getDocumento())
-                    .add("actividad", a.getActividadnombre())
-                    .add("sesion", a.getSesion())
-                    .add("fecha", a.getFecha().toString())
-                    .add("tipo", a.getTipotraza()));
+        Set<TareaTupla> keySet = estdianteActividades.keySet();
+
+        keySet.forEach((documento) -> {
+            List<Traza> lista = estdianteActividades.get(documento);
+
+            Map<String, List<Traza>> trazaactaividad = traza.stream().collect(groupingBy(Traza::getActividadnombre));
+
+            Set<String> keyActividad = trazaactaividad.keySet();
+            
+            JsonArrayBuilder jsontarea = Json.createArrayBuilder();            
+            
+            keyActividad.forEach((tarea) -> {
+                List<Traza> tmp = trazaactaividad.get(tarea);
+                Traza t01 = tmp.get(0);
+                Traza t02 = tmp.get(tmp.size()-1);
+                
+                LocalDateTime ini = t01.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+                LocalDateTime fin = t02.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+                
+                Duration duration = Duration.between(ini, fin);                
+                
+                //jsontarea.add(Json.createObjectBuilder().add("nombre", t01.getActividadnombre()).add("fecha", t01.getFecha().toString()).add("duracion", duration.toMinutes()));
+                jsonrespuesta.add(Json.createObjectBuilder()
+                        .add("estudiante", documento.getNombre())
+                        .add("actividad", documento.getActividad())
+                        .add("nivel",Optional.ofNullable(documento.getNivel()).orElse("---"))
+                        .add("nombre", t01.getActividadnombre())
+                        .add("fecha", new SimpleDateFormat("YYYY/MM/DD").format(t01.getFecha()))
+                        .add("duracion", duration.toMinutes()));
+                sumMinutos += duration.toMinutes();
+            });
+            
+            JsonObjectBuilder json = Json.createObjectBuilder();
+            json.add("estudiante", documento.getNombre())
+                    .add("actividad", documento.getActividad())
+                    .add("nivel",Optional.ofNullable(documento.getNivel()).orElse("---"))
+                    .add("duracion", sumMinutos)
+                    .add("tareas", jsontarea.build());
+            sumMinutos = 0L;
+            //jsonrespuesta.add(json);
         });
-        return json.build();
+        return jsonrespuesta.build();
     }
 
     public void TrazaIntento(String documento, Long actividadId, List<RespuestaActividad> lista) {
@@ -168,4 +218,8 @@ class TareaTupla {
     public String getNombre() {
         return nombre;
     }
+
+    public String getNivel() {
+        return nivel;
+    }        
 }

@@ -35,8 +35,8 @@ import javax.persistence.Transient;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Traza.Todos", query = "SELECT a FROM Traza a JOIN a.actividad b JOIN b.sequencia c ORDER BY a.sesion,a.documento"),
-    @NamedQuery(name = "Traza.JOIN", query = "SELECT NEW com.mycompany.actividadtrazas.entity.Traza(a.id,a.fecha,a.sesion,a.documento,a.grupo,a.tipotraza,b.descripcion,c.descripcion) FROM Traza a JOIN a.actividad b JOIN b.sequencia c ORDER BY a.sesion,a.documento"),
-    @NamedQuery(name = "Traza.Fecha", query = "SELECT a FROM Traza a WHERE a.fecha BETWEEN :fechaIncial AND :fechaFinal AND a.grupo = :grupo ORDER BY a.sesion,a.documento,a.fecha")
+    @NamedQuery(name = "Traza.JOIN", query = "SELECT NEW com.mycompany.actividadtrazas.entity.Traza(a.id,a.fecha,a.sesion,a.documento,a.grupo,a.tipotraza,b.descripcion,c.descripcion,c.nivel) FROM Traza a JOIN a.actividad b JOIN b.sequencia c ORDER BY a.sesion,a.documento,a.fecha"),
+    @NamedQuery(name = "Traza.Fecha", query = "SELECT NEW com.mycompany.actividadtrazas.entity.Traza(a.id,a.fecha,a.sesion,a.documento,a.grupo,a.tipotraza,b.descripcion,c.descripcion,c.nivel) FROM Traza a JOIN a.actividad b JOIN b.sequencia c WHERE a.fecha BETWEEN :fi AND :ff ORDER BY a.sesion,a.documento,a.fecha")
 })
 public class Traza implements Serializable {
     
@@ -45,7 +45,7 @@ public class Traza implements Serializable {
 
     public Traza(){}
     
-    public Traza(Long id, Date fecha, String sesion, String documento, String grupo, String tipotraza, String actividadnombre, String secuencianombre) {
+    public Traza(Long id, Date fecha, String sesion, String documento, String grupo, String tipotraza, String actividadnombre, String secuencianombre,String nivel) {
         this.id = id;
         this.fecha = fecha;
         this.sesion = sesion;
@@ -54,6 +54,7 @@ public class Traza implements Serializable {
         this.tipotraza = tipotraza;                
         this.actividadnombre = actividadnombre;
         this.secuencianombre = secuencianombre;
+        this.nivel = nivel;
     }        
     
     @Id
@@ -86,6 +87,8 @@ public class Traza implements Serializable {
     public String actividadnombre;
     @Transient
     public String secuencianombre;        
+    @Transient
+    public String nivel;
 
     @PrePersist
     public void init(){
@@ -184,5 +187,8 @@ public class Traza implements Serializable {
     public void setSecuencianombre(String secuencianombre) {
         this.secuencianombre = secuencianombre;
     }
-    
+
+    public String getNivel() {
+        return nivel;
+    }        
 }
