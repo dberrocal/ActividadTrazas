@@ -58,8 +58,8 @@ ReporteTiempo.controls ={
 
 
 
- GenerarReporteTiempo= function (elementID)
-  {
+ GenerarReporteTiempo= function (elementID, grupoID, fechaini, fechafin)
+  {//http://localhost:8080/ActividadTrazas/webresources/reporte/tiempo/$("#grupo").val()/$("#Fechaini").val()/$("#Fechafin").val()
          $("#" + elementID).kendoGrid({
             toolbar: ["excel"],
             excel: {
@@ -68,36 +68,37 @@ ReporteTiempo.controls ={
                 filterable: true
             },
             dataSource: {
-                type: "odata",
+                type: "json",
                 transport: {
-                    read: "https://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
+                    read: "http://localhost:8080/ActividadTrazas/webresources/reporte/tiempo/?grupo=" + grupoID + "&fi=" + fechaini + "&ff=" + fechafin
                 },
                 schema:{
                     model: {
                         fields: {
-                            UnitsInStock: { type: "number" },
-                            ProductName: { type: "string" },
-                            UnitPrice: { type: "number" },
-                            UnitsOnOrder: { type: "number" },
-                            UnitsInStock: { type: "number" }
+                            estudiante: { type: "string" },
+                            actividad: { type: "string" },
+                            nivel: { type: "string" },
+                            tareas: { type: "string" },
+                            nombre: { type: "string" },
+                            duracion: { type: "string" },
                         }
                     }
                 },
                 pageSize: 7,
                 group: {
-                    field: "UnitsInStock", aggregates: [
-                        { field: "ProductName", aggregate: "count" },
-                        { field: "UnitPrice", aggregate: "sum"},
-                        { field: "UnitsOnOrder", aggregate: "average" },
-                        { field: "UnitsInStock", aggregate: "count" }
+                    field: "tareas", aggregates: [
+                        { field: "nombre", aggregate: "count" },
+                        { field: "duracion", aggregate: "sum"},
+//                        { field: "UnitsOnOrder", aggregate: "average" },
+//                        { field: "UnitsInStock", aggregate: "count" }
                     ]
                 },
                 aggregate: [
-                    { field: "ProductName", aggregate: "count" },
-                    { field: "UnitPrice", aggregate: "sum" },
-                    { field: "UnitsOnOrder", aggregate: "average" },
-                    { field: "UnitsInStock", aggregate: "min" },
-                    { field: "UnitsInStock", aggregate: "max" }
+                    { field: "tareas", aggregate: "count" },
+                    { field: "nombre", aggregate: "count" },
+                    { field: "duracion", aggregate: "sum" },
+//                    { field: "UnitsInStock", aggregate: "min" },
+//                    { field: "UnitsInStock", aggregate: "max" }
                 ]
             },
             sortable: true,
@@ -108,98 +109,17 @@ ReporteTiempo.controls ={
             reorderable: true,
             resizable: true,
             columns: [
-                { field: "ProductName", title: "Product Name", aggregates: ["count"], footerTemplate: "Total Count: #=count#", groupFooterTemplate: "Count: #=count#" },
-                { field: "UnitPrice", title: "Unit Price", aggregates: ["sum"] },
-                { field: "UnitsOnOrder", title: "Units On Order", aggregates: ["average"], footerTemplate: "Average: #=average#",
-                    groupFooterTemplate: "Average: #=average#" },
-                { field: "UnitsInStock", title: "Units In Stock", aggregates: ["min", "max", "count"], footerTemplate: "Min: #= min # Max: #= max #",
-                groupHeaderTemplate: "Units In Stock: #= value # (Count: #= count#)" }
+                { field: "estudiante", title: "Estudiante",/* aggregates: ["count"], footerTemplate: "Total estudiante: #=count#", groupFooterTemplate: "Count: #=count#"*/ },
+                { field: "actividad", title: "actividad", /*aggregates: ["sum"] */},
+                { field: "nombre", title: "nombre", /*aggregates: ["average"], footerTemplate: "Average: #=average#",
+                    groupFooterTemplate: "Average: #=average#" */},
+                { field: "nivel", title: "nivel", /*aggregates: ["sum"] */},
+                { field: "tareas", title: "tareas",/* aggregates: ["min", "max", "count"], footerTemplate: "Min: #= min # Max: #= max #",groupHeaderTemplate: "Units In Stock: #= value # (Count: #= count#)" */}
             ]
         });
   
                 
   }
   
-  ValidarReporteTiempo = function (){
-      
-      var ReporteTiempoID=   $("#ReporteTiempo").data("kendoDropDownList").value();
-      var result = [];
-      $("#FormReporteTiempo input[type='text']").each(function(){
-        result.push({pregunta : parseInt($(this).attr('id')), respuesta : $(this).val()});
-      });
-      
-      General.Service.SendPost(ReporteTiempo.appConst.urlGetValidarReporteTiempo + ReporteTiempoID, result,
-      function(data){
-          console.log(data);
-      },
-      function (data){
-          console.log(data);
-      })
-     //console.log(result);
   
-  }
-  
-  VerRespuestas = function (){
-      
-     
-      //ReporteTiempoid
-      var data =[
-            { preguntaID:1 , respuesta:'is loved'},
-            { preguntaID:2 , respuesta:'was never used'},
-            { preguntaID:3 , respuesta:'have been lost'}
-            
-        ];
-        
-        for (i = 0; i < data.length; i++) {
-            $("#FormReporteTiempo input[type='hidden']").each(function(){
-             
-                if("respuesta" + data[i].preguntaID == $(this).attr('id')){
-                    
-                    //if(data[i].respuesta == $(this).val()){
-                      $( "#respuesta"+ data[i].preguntaID ).show();
-                      $( "#respuesta"+ data[i].preguntaID ).val(data[i].respuesta)
-                      $( "#respuesta"+ data[i].preguntaID ).prop('type', 'text');
-//                     }else{
-//                         console.log("Respuesta " + data[i].respuesta + "pregunta" + data[i].preguntaID  +"respuesta estudiante" + $(this).val() )
-//                     }
-//  $( "#FormReporteTiempo" ).append( "aaaa") ;
-                }
-            });
-        }
-    
-//      $("#FormReporteTiempo span").each(function(){
-//        $(".RespuestaCorrecta").show();
-//      });
-//      
-//      $("#FormReporteTiempo input[type='text']").each(function(){
-//        $("input[type='text']").css("")
-//      });
-     //console.log(result);
-          
-      
-  }
- 	function empezarDetener()
-	{
-		
-	}
  
-	function funcionando()
-	{
-		// obteneos la fecha actual
-		var actual = new Date().getTime();
- 
-		// obtenemos la diferencia entre la fecha actual y la de inicio
-		var diff=new Date(actual-inicio);
- 
-		// mostramos la diferencia entre la fecha actual y la inicial
-		var result=LeadingZero(diff.getUTCHours())+":"+LeadingZero(diff.getUTCMinutes())+":"+LeadingZero(diff.getUTCSeconds());
-		$("#reloj").val(result);
- 
-		// Indicamos que se ejecute esta función nuevamente dentro de 1 segundo
-		timeout=setTimeout("funcionando()",1000);
-	}
- 
-	/* Funcion que pone un 0 delante de un valor si es necesario */
-	function LeadingZero(Time) {
-		return (Time < 10) ? "0" + Time : + Time;
-	}

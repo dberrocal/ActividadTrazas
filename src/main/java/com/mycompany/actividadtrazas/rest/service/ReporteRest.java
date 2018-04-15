@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response;
  *
  * @author Daniel
  */
-@Path("resporte")
+@Path("reporte")
 public class ReporteRest {
     
     @Inject
