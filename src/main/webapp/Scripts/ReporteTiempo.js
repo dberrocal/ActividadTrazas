@@ -64,7 +64,7 @@ ReporteTiempo.controls ={
             toolbar: ["excel"],
             excel: {
                 fileName: "Kendo UI Grid Export.xlsx",
-                proxyURL: "https://demos.telerik.com/kendo-ui/service/export",
+              //  proxyURL: "https://demos.telerik.com/kendo-ui/service/export",
                 filterable: true
             },
             dataSource: {
@@ -78,27 +78,21 @@ ReporteTiempo.controls ={
                             estudiante: { type: "string" },
                             actividad: { type: "string" },
                             nivel: { type: "string" },
-                            tareas: { type: "string" },
                             nombre: { type: "string" },
-                            duracion: { type: "string" },
+                            fecha: { type: "date" },
+                            duracion: { type: "number" },
                         }
                     }
                 },
                 pageSize: 7,
                 group: {
-                    field: "tareas", aggregates: [
-                        { field: "nombre", aggregate: "count" },
+                    field: "actividad", aggregates: [                       
                         { field: "duracion", aggregate: "sum"},
-//                        { field: "UnitsOnOrder", aggregate: "average" },
-//                        { field: "UnitsInStock", aggregate: "count" }
                     ]
                 },
                 aggregate: [
-                    { field: "tareas", aggregate: "count" },
-                    { field: "nombre", aggregate: "count" },
+                //    { field: "actividad", aggregate: "count" },                    
                     { field: "duracion", aggregate: "sum" },
-//                    { field: "UnitsInStock", aggregate: "min" },
-//                    { field: "UnitsInStock", aggregate: "max" }
                 ]
             },
             sortable: true,
@@ -110,11 +104,11 @@ ReporteTiempo.controls ={
             resizable: true,
             columns: [
                 { field: "estudiante", title: "Estudiante",/* aggregates: ["count"], footerTemplate: "Total estudiante: #=count#", groupFooterTemplate: "Count: #=count#"*/ },
-                { field: "actividad", title: "actividad", /*aggregates: ["sum"] */},
-                { field: "nombre", title: "nombre", /*aggregates: ["average"], footerTemplate: "Average: #=average#",
-                    groupFooterTemplate: "Average: #=average#" */},
-                { field: "nivel", title: "nivel", /*aggregates: ["sum"] */},
-                { field: "tareas", title: "tareas",/* aggregates: ["min", "max", "count"], footerTemplate: "Min: #= min # Max: #= max #",groupHeaderTemplate: "Units In Stock: #= value # (Count: #= count#)" */}
+                { field: "actividad", title: "Actividad", /*aggregates: ["count"], footerTemplate: "Cantidad: #=count#",  groupFooterTemplate: "Cantidad: #= count#" */},
+                { field: "nombre", title: "Nombre",},
+                { field: "nivel", title: "Nivel", /*aggregates: ["sum"] */},
+                { field: "fecha", title: "Fecha",   template: "#= kendo.toString(kendo.parseDate(fecha, 'yyyy-MM-dd'), 'MM/dd/yyyy') #" /*aggregates: ["sum"] */},
+                { field: "duracion", title: "Duracion", aggregates: ["sum"], footerTemplate: "Suma: #= sum#",groupHeaderTemplate: "Suma: #= sum#" }
             ]
         });
   
