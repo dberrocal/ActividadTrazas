@@ -1,0 +1,247 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:100);
+@import url(http://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css);
+
+body {
+ 
+  color: #000000;
+  font-family: 'Roboto';
+  margin:0 auto;
+  text-align: center;
+  background-attachment: scroll;
+  background-repeat: no-repeat;
+
+}
+.container{
+  margin: 0 auto;
+  text-align:left;
+  width:90%;
+  margin-bottom: 10%;
+  margin-left: 14%;
+  margin-right: 10%;
+  margin-top: 6%;
+}
+
+.sinbordes{
+  background-color: #eee;
+  border: 0;
+}
+
+.li-form{
+    text-align: center;
+    padding: 10px;
+}
+.flat-form {
+    
+  background: #F4F6F7;
+  margin-left : auto;
+  margin-right : auto;
+  padding: '0px';
+  width: 100%;
+  height: 400px;
+  position: relative;
+  font-family: 'Roboto';
+  box-shadow: 0px 0px 11px 0px rgba(144, 141, 141, 0.75);
+}
+.tabs {
+  background: #EDF2F2;  
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  width: 100%;
+  position: relative;
+  display: block;
+  margin-bottom: 20px;
+}
+.tabs li {
+  display: block;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+.tabs a {
+  background:  #EDF2F2;
+  display: block;
+  float: left;
+  text-decoration: none;
+  color: black;
+  font-size: 16px;
+  padding: 12px 22px 12px 22px;
+  
+
+}
+.tabs li:last-child a {
+  border-right: none;
+  width: 174px;
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
+}
+.tabs a.active {
+/*  background: #2980b9;*/
+background: #F4F6F7;
+color: #000000;
+  border-right: none;
+  -webkit-transition: all 0.5s linear;
+	-moz-transition: all 0.5s linear;
+	transition: all 0.5s linear;
+}
+.form-action {
+  padding: 0 20px;
+  position: relative;
+}
+
+.form-action h1 {
+  font-size: 42px;
+  padding-bottom: 10px;
+}
+.form-action p {
+  font-size: 12px;
+  padding-bottom: 10px;
+  line-height: 25px;
+}
+form {
+  padding-right: 20px !important;
+}
+form input[type=number],
+form input[type=text],
+form input[type=password],
+form input[type=submit] {
+  font-family: 'Roboto';
+}
+form input[type=number],
+form input[type=text],
+form input[type=password] {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 10px;
+  padding-left: 15px;
+  background: #fff;
+  border: none;
+/*  color: #e74c3c;*/
+  color:#000000;
+  outline: none;
+}
+
+.dark-box {
+    
+  background: #3C8BBF;
+/*  background: #1B5276;*/
+  box-shadow: 1px 3px 3px #3d0100 inset;
+  height: 40px;
+  width: 50px;
+}
+.form-action .dark-box.bottom {
+  position: absolute;
+  right: 0;
+  bottom: -24px;
+}
+.tabs + .dark-box.top {
+  position: absolute;
+  right: 0;
+  top: 0px;
+}
+.show {
+  display: block;
+}
+.hide {
+  display: none;
+}
+
+.button {
+    border: none;
+    display: -webkit-inline-box;
+    background: #3C8BBF;
+/*    height: 40px;
+    width: 60%;*/
+    width: 34%;
+    height: 40px;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 5px;
+    /*box-shadow: 0px 3px 1px #2075aa;*/
+  	-webkit-transition: all 0.15s linear;
+	  -moz-transition: all 0.15s linear;
+	  transition: all 0.15s linear;
+}
+
+.button:hover {
+  background: #1e75aa;
+  /*box-shadow: 0 3px 1px #237bb2;*/
+}
+
+.button:active {
+  background: #136899;
+  /*box-shadow: 0 3px 1px #0f608c;*/
+}
+
+::-webkit-input-placeholder {
+/*  color: #e74c3c;*/
+color: #ABB2B9;
+}
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: #e74c3c;
+}
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #e74c3c;
+}
+:-ms-input-placeholder {
+  color: #e74c3c;
+}
+
+.f-input-question
+{
+    display: inline-block !important;
+    width: auto !important;
+}
+
+#FormActividad
+{
+   list-style-type: decimal !important;
+}
+
+.f-cont-form-ac
+{
+    margin: 0 auto;
+}
+
+#Seleccion .flat-form
+{
+    padding: 40px 10px;
+    box-shadow: 0px 0px 11px 0px rgba(144, 141, 141, 0.75);
+}
+
+.f-form-actividad
+{
+    padding: 25px 349px;
+}
+
+.cont-col
+{
+    margin: 0 auto !important;
+    display: inline !important;
+}
+
+.container-pregunta{
+  margin: 0 auto;
+  text-align:left;
+  width:59%;
+  margin-bottom: 10%;
+/*  margin-left: 14%;
+  margin-right: 10%;*/
+  margin-top: 10%;
+  
+  
+  background: #F4F6F7;
+/*  margin-left : auto;
+  margin-right : auto;*/
+  padding: 2%;
+/*  width: 390px;
+  height: 456px;*/
+  position: relative;
+  font-family: 'Roboto';
+  box-shadow: 0px 0px 11px 0px rgba(144, 141, 141, 0.75);
+
+}

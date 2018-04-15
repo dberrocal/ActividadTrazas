@@ -71,12 +71,16 @@ Login.util ={
         if (documento!= ""){
           
           var prueba ="123"
+          var docente ="456"
           
-          if (documento != prueba){
+          if (documento != prueba && documento != docente){
                  General.controls.ShowGeneralMessage("Login","Usuario incorrecto");
           }else{
-              
-              window.location.href = "../Forms/SeleccionActividad.html";
+              if(documento == "456"){
+                   window.location.href = "../Forms/ReporteTiempo.html";
+              }else{
+                   window.location.href = "../Forms/SeleccionActividad.html";
+             }
           }
           
         }else{

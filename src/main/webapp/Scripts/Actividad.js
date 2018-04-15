@@ -121,8 +121,9 @@ Actividad.controls ={
  BuscarActividad= function ()
   {
       $("#Seleccion").hide();
+      $("#DivActividad").show();
      
-     var actividadID=   $("#Actividad").data("kendoDropDownList").value();
+     var actividadID=  $("#Actividad").data("kendoDropDownList").value();
         
         
         
@@ -139,7 +140,7 @@ Actividad.controls ={
                          }
                          
                    }
-                    $( "#FormActividad" ).append( " <div class='btn-btn-gropup'><input type='submit' value='Validar' style='margin-right: 20%;' class='button' id ='Validar' onclick='ValidarActividad()' /><input type='submit' value='Ver respuestas' class='button' id ='VerRespuestas' onclick='VerRespuestas()' /> </div>") ;
+                    $( "#FormActividad" ).append( " <div class='btn-btn-gropup'><button style='margin-right: 20%;' class='button' id ='Validar' onclick='ValidarActividad()'> Validar </button><input type='submit' value='Ver respuestas' class='button' id ='VerRespuestas' onclick='VerRespuestas()' /> </div>") ;
 //                    $( "#FormActividad" ).append( " <div class='col-md-6'> <div class='col-md-6 cont-col'><input type='submit' value='Ver respuestas' class='btn button' id ='VerRespuestas' onclick='VerRespuestas()' /></div></div>") ;
             
         },
@@ -154,11 +155,12 @@ Actividad.controls ={
 //            
 //        ];
 //        
-        
+      //  $("#Validar").prop("disabled",false);
                 
   }
   
   ValidarActividad = function (){
+      
       
       var actividadID=   $("#Actividad").data("kendoDropDownList").value();
       var result = [];
@@ -169,10 +171,30 @@ Actividad.controls ={
       General.Service.SendPost(Actividad.appConst.urlGetValidarActividad + actividadID, result,
       function(data){
           console.log(data);
+          
+          if(data != null){
+                 for (i = 0; i < data.length; i++) {
+                    $("#FormActividad input[type='text']").each(function(){
+                        //console.log($(this).attr('id'));
+
+                        if(data[i].pregunta == parseInt($(this).attr('id'))){
+                            if(data[i].valido == false){
+                            $(this).css("color", "red");
+                            $(this).css("font-weight", "bold");
+                        }else{
+                              $(this).css("color", "green");
+                              $(this).css("font-weight", "bold");
+                        }
+                        }
+              //result.push({pregunta : parseInt($(this).attr('id')), respuesta : $(this).val()});
+                       });
+                }
+      
+          }
       },
       function (data){
           console.log(data);
-      })
+      },)
      //console.log(result);
   
   }
@@ -216,3 +238,28 @@ Actividad.controls ={
           
       
   }
+ 	function empezarDetener()
+	{
+		
+	}
+ 
+	function funcionando()
+	{
+		// obteneos la fecha actual
+		var actual = new Date().getTime();
+ 
+		// obtenemos la diferencia entre la fecha actual y la de inicio
+		var diff=new Date(actual-inicio);
+ 
+		// mostramos la diferencia entre la fecha actual y la inicial
+		var result=LeadingZero(diff.getUTCHours())+":"+LeadingZero(diff.getUTCMinutes())+":"+LeadingZero(diff.getUTCSeconds());
+		$("#reloj").val(result);
+ 
+		// Indicamos que se ejecute esta función nuevamente dentro de 1 segundo
+		timeout=setTimeout("funcionando()",1000);
+	}
+ 
+	/* Funcion que pone un 0 delante de un valor si es necesario */
+	function LeadingZero(Time) {
+		return (Time < 10) ? "0" + Time : + Time;
+	}

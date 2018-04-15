@@ -104,7 +104,7 @@ General.controls ={
                 $.ajax({
                     type: "POST",
                     url: urlService,
-                    dataType: "json1",
+                    dataType: "json",
                     success: methodOk,
                     error: methodFailure,
                     data: JSON.stringify(pData),

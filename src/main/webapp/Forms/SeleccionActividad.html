@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Start Page</title>
+        <title>Actividad</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="../css/boostrap/bootstrap.css" rel="stylesheet" type="text/css"/>
         <link href="../css/Actividad.css" rel="stylesheet" type="text/css"/>   
@@ -27,7 +27,7 @@
                 <h2 class="text-center" style="font-weight: bold;">Actividad </h2>
 
                 <div class="f-cont-form-act text-center">        
-        <!--        <div  class="jumbotron">-->
+        
                     <h5 class="text-center">Seleccione el nivel y la actividad a realizar</h5>
                     <br>
                       <form onsubmit="return false" class="f-form-actividad">
@@ -44,17 +44,6 @@
                                 <input type="submit" value="Buscar" class="button" id ="Buscar" onclick="BuscarActividad()" />
                             </div>
                         </div>
-<!--                        <ul>
-                            <li class="">
-                                <input type="text" placeholder="Nivel" id="Nivel"  style="width: 60%"/>
-                            </li>
-                            <li class="">
-                                <input type="text" placeholder="Actividad" id="Actividad"  style="width: 60%"/>
-                            </li>
-                            <li class="">
-                                <input type="submit" value="Buscar" class="button" id ="Buscar" onclick="BuscarActividad()" />
-                            </li>
-                        </ul>-->
                       </form>
 
                 </div>
@@ -62,10 +51,16 @@
         </div>
         
         
-        <div class="container-fluid">
+        <div class="container-fluid" style="display: none" id="DivActividad">
             <div class="container-pregunta">
-                <div class="col-md-12">
+                <div class="col-md-12"> 
+                    
+                    <div class="col-md-12">
+
+                        <label class="control-label text-left col-md-12" style="margin-bottom: 19px"><span > <i>Estudiante </i></span>Maria Perez   <span style="padding-left: 71%" id="tmp_contador"></span>  </label>                       
+                     </div>        
                     <ul id="FormActividad">  
+                        
                     </ul>
                 </div>
             </div>
@@ -75,7 +70,16 @@
         <script>
         $(document).ready(function () {
             Actividad.controls.SetDropDownActividadXNivel("Nivel","Actividad");
-
+            
+            var seg = 0,min = 00,hor=0;            
+            
+            setInterval(function(){
+                seg +=1;
+                if(seg >= 60){ seg = 0;min +=1;}
+                if(min >= 60){ min = 0;hor +=1;}
+                
+                $('#tmp_contador').text(hor+":"+min+":"+seg)
+            },1000)
         });
         </script>  
         <script src="../Scripts/boostrap/bootstrap.min.js" type="text/javascript"></script>
