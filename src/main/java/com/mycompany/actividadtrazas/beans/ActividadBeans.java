@@ -205,7 +205,8 @@ public class ActividadBeans implements Serializable{
         
         List<Secuencia> secuencias = em.createNamedQuery(Secuencia.TODOS).getResultList();
         List<Estudiante> estudiantes = em.createNamedQuery(Estudiante.TODOS).getResultList();
-        System.out.println(estudiantes.size());
+        
+        
         em.getTransaction().begin();
         for(Estudiante estudiante:estudiantes){
             for(Secuencia secuencia:secuencias){
@@ -215,7 +216,7 @@ public class ActividadBeans implements Serializable{
                     Long tx = new Random().nextLong();
                     
                     Traza trx = new Traza(tx.toString(),estudiante.getDocumento(), actividad.getId(), TrazaTipo.A01INIACT.toString());
-                    fecha.add(Calendar.MINUTE, -3);
+                    fecha.add(Calendar.MINUTE, -10);
                     trx.setFecha(fecha.getTime());
                     
                     em.persist(trx);            
@@ -243,13 +244,13 @@ public class ActividadBeans implements Serializable{
                         Logger.getLogger(ActividadBeans.class.getName()).log(Level.SEVERE, null, ex);
                     }*/                        
                     Traza trx03 = new Traza(tx.toString(),estudiante.getDocumento(), actividad.getId(), TrazaTipo.A03OKACT.toString());
-                    fecha.add(Calendar.MINUTE, 1);
+                    fecha.add(Calendar.MINUTE, 20);
                     trx03.setFecha(fecha.getTime());                    
                     em.persist(trx03);
             
-                    System.out.println("----FIN----");
+                    
                 }
-            }
+            }            
         }
         em.getTransaction().commit();                                
     }
