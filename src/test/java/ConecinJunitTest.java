@@ -58,10 +58,10 @@ public class ConecinJunitTest {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("DB");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        for(Pregunta p : Arrays.asList(new Pregunta("", "", ""),new Pregunta("", "", ""),new Pregunta("", "", ""),new Pregunta("", "", ""),new Pregunta("", "", ""))){
+        /*for(Pregunta p : Arrays.asList(new Pregunta("", "", ""),new Pregunta("", ""),new Pregunta("", ""),new Pregunta("", ""),new Pregunta("", ""))){
             em.persist(p);
             System.out.println(p.getId());
-        }
+        }*/
         em.getTransaction().commit();
     }
         
@@ -78,10 +78,10 @@ public class ConecinJunitTest {
         List<Pregunta> lista = new ArrayList<>();
         em.getTransaction().begin();
         for(Pregunta p : Arrays.asList(
-                new Pregunta("Alberto ESPACIO (drive) to school bus everyday","A","") ,
-                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A",""),
-                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A",""),
-                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A",""))){            
+                new Pregunta("Alberto ESPACIO (drive) to school bus everyday","A") ,
+                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"))){            
             //em.persist(p);
             lista.add(p);
         }

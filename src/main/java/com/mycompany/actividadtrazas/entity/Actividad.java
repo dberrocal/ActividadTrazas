@@ -57,6 +57,11 @@ public class Actividad implements Serializable {
         this.id = id;        
     }        
 
+    public Actividad(String descripcion, List<Pregunta> pregunta) {        
+        this.descripcion = descripcion;                
+        this.pregunta = pregunta;
+    }
+        
     public void setId(Long id) {
         this.id = id;
     }

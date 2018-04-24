@@ -27,10 +27,11 @@ import javax.validation.constraints.NotNull;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Secuencia.Todos", query = "SELECT a FROM Secuencia a"),
-    @NamedQuery(name = "Secuencia.Niveles", query = "SELECT a FROM Secuencia a")
+    @NamedQuery(name = "Secuencia.Niveles", query = "SELECT a FROM Secuencia a WHERE a.nivel = :nivel")
 })
 public class Secuencia implements Serializable {    
     public static String TODOS = "Secuencia.Todos";
+    public static String NIVEL = "Secuencia.Niveles";
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
@@ -44,6 +45,16 @@ public class Secuencia implements Serializable {
     private Integer numero;
     @OneToMany(mappedBy = "sequencia",cascade = CascadeType.PERSIST)
     private List<Actividad> actividades;
+
+    public Secuencia() {
+    }        
+
+    public Secuencia(String descripcion, String nivel, List<Actividad> actividades) {
+        this.descripcion = descripcion;
+        this.nivel = nivel;
+        this.numero = actividades.size();
+        this.actividades = actividades;
+    }        
     
     public Long getId() {
         return id;

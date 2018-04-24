@@ -34,13 +34,13 @@ import javax.persistence.Transient;
 @Table(name = "traza")
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Traza.Todos", query = "SELECT a FROM Traza a JOIN a.actividad b JOIN b.sequencia c ORDER BY a.sesion,a.documento"),
+    @NamedQuery(name = "Traza.Todos", query = "SELECT a FROM Traza a JOIN a.actividad b JOIN b.sequencia c ORDER BY a.fecha"),
     @NamedQuery(name = "Traza.JOIN", query = "SELECT NEW com.mycompany.actividadtrazas.entity.Traza(a.id,a.fecha,a.sesion,a.documento,a.grupo,a.tipotraza,b.descripcion,c.descripcion,c.nivel) FROM Traza a JOIN a.actividad b JOIN b.sequencia c ORDER BY a.sesion,a.documento,a.fecha"),
     @NamedQuery(name = "Traza.Fecha", query = "SELECT NEW com.mycompany.actividadtrazas.entity.Traza(a.id,a.fecha,a.sesion,a.documento,a.grupo,a.tipotraza,b.descripcion,c.descripcion,c.nivel) FROM Traza a JOIN a.actividad b JOIN b.sequencia c WHERE a.fecha BETWEEN :fi AND :ff ORDER BY a.sesion,a.documento,a.fecha")
 })
 public class Traza implements Serializable {
     
-    public static final String TODOS = "Traza.JOIN";
+    public static final String TODOS = "Traza.Todos";
     public static final String REPORTE = "Traza.Fecha";
 
     public Traza(){}
@@ -92,10 +92,16 @@ public class Traza implements Serializable {
 
     @PrePersist
     public void init(){
-        //this.fecha = Calendar.getInstance().getTime();
+        this.fecha = Calendar.getInstance().getTime();
     }
     
-    public Traza(String sesion,String documento, Long actividad, String tipotraza) {                
+    public Traza(String documento,String sesion, String tipotraza) {                
+        this.sesion = sesion;
+        this.documento = documento;        
+        this.tipotraza = tipotraza;
+    }
+    
+    public Traza(String documento,String sesion, Long actividad, String tipotraza) {                
         this.sesion = sesion;
         this.documento = documento;
         this.actividad = new Actividad(actividad);

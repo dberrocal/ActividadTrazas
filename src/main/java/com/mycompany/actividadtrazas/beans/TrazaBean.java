@@ -5,25 +5,32 @@
  */
 package com.mycompany.actividadtrazas.beans;
 
+import com.mycompany.actividadtrazas.entity.Actividad;
+import com.mycompany.actividadtrazas.entity.Estudiante;
+import com.mycompany.actividadtrazas.entity.Pregunta;
 import com.mycompany.actividadtrazas.entity.RespuestaActividad;
+import com.mycompany.actividadtrazas.entity.Secuencia;
 import com.mycompany.actividadtrazas.entity.Traza;
 import com.mycompany.actividadtrazas.entity.TrazaError;
 import com.mycompany.actividadtrazas.entity.TrazaTipo;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.groupingBy;
 import java.util.stream.Stream;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,7 +49,7 @@ import javax.persistence.PersistenceUnit;
  * @author Daniel
  */
 @Named
-@RequestScoped
+@ApplicationScoped
 public class TrazaBean {
 
     @Inject
@@ -51,7 +58,7 @@ public class TrazaBean {
     @PersistenceUnit(name = "DB")
     private EntityManagerFactory emf;
     private long sumMinutos = 0L;
-
+    
     public JsonArray getTrazas() {
 
         JsonArrayBuilder jsonrespuesta = Json.createArrayBuilder();
@@ -165,27 +172,116 @@ public class TrazaBean {
             //jsonrespuesta.add(json);
         });
         return jsonrespuesta.build();
+    }   
+    
+    public void TrazaTiempo(String documento,String session,Long actividadId,TrazaTipo tipo){        
+        EntityManager em = emf.createEntityManager();        
+        Traza tz = new Traza(documento, session, actividadId,tipo.toString());
+        em.getTransaction().begin();
+        em.persist(tz);
+        em.getTransaction().commit();
     }
-
-    public void TrazaIntento(String documento, Long actividadId, List<RespuestaActividad> lista) {
+    
+    public void TrazaIntento(String documento, String session,Long actividadId, List<RespuestaActividad> lista) {
+        
         EntityManager em = emf.createEntityManager();
 
         Boolean valida = lista.stream().allMatch(RespuestaActividad::getValido);
         //Traza acierto
+        em.getTransaction().begin();
         if (valida) {
-            Traza tz = new Traza("", documento, actividadId, TrazaTipo.ACIERTO.toString());
-            em.getTransaction().begin();
-            em.persist(tz);
-            em.getTransaction().commit();
+            Traza tz01 = new Traza(documento, session, actividadId, TrazaTipo.ACIERTO.toString());
+            Traza tz02 = new Traza(documento, session, actividadId, TrazaTipo.A10FINTIEMPO.toString());            
+            em.persist(tz01);
+            em.persist(tz02);            
         } else {
-            Traza tz = new Traza("", documento, actividadId, TrazaTipo.INTENTO.toString());
+            Traza tz = new Traza(documento, session, actividadId, TrazaTipo.INTENTO.toString());
             lista.stream().filter((RespuestaActividad e) -> !e.getValido()).forEach((e) -> {
                 tz.pushError(new TrazaError(tz, e.getPregunta(), e.getRespuesta()));
-            });
-            em.getTransaction().begin();
-            em.persist(tz);
-            em.getTransaction().commit();
+            });            
+            em.persist(tz);            
         }
+        em.getTransaction().commit();
+    }
+    
+    private void InsertarEstudiantes(){
+        EntityManager em = emf.createEntityManager();                        
+        List<Estudiante> lista = Arrays.asList(
+                new Estudiante("A101", "Estudiante A101", "A1"),
+                new Estudiante("A102", "Estudiante A102", "A1"),
+                new Estudiante("A103", "Estudiante A103", "A1"),
+                new Estudiante("A104", "Estudiante A104", "A1"),
+                new Estudiante("A105", "Estudiante A105", "A1"),
+                new Estudiante("A106", "Estudiante A106", "A1"),
+                new Estudiante("A107", "Estudiante A107", "A1"),
+                new Estudiante("B101", "Estudiante B101", "B1"),
+                new Estudiante("B102", "Estudiante B102", "B1"),
+                new Estudiante("B103", "Estudiante B103", "B1")
+        );
+                
+        em.getTransaction().begin();
+        for(Estudiante s: lista){
+            em.persist(s);
+        }
+        
+        em.getTransaction().commit();
+        
+    }
+    
+    private void InsertarTrazas(){
+                
+        EntityManager em = emf.createEntityManager();
+        
+        List<Secuencia> secuencias = em.createNamedQuery(Secuencia.TODOS).getResultList();
+        List<Estudiante> estudiantes = em.createNamedQuery(Estudiante.TODOS).getResultList();
+        
+        
+        em.getTransaction().begin();
+        for(Estudiante estudiante:estudiantes){
+            for(Secuencia secuencia:secuencias){
+                for(Actividad actividad:secuencia.getActividades()){
+                    Calendar fecha = Calendar.getInstance();
+                    System.out.println(estudiante.getDocumento());
+                    Long tx = new Random().nextLong();
+                    
+                    Traza trx = new Traza(tx.toString(),estudiante.getDocumento(), actividad.getId(), TrazaTipo.A01INIACT.toString());
+                    fecha.add(Calendar.MINUTE, -10);
+                    trx.setFecha(fecha.getTime());
+                    
+                    em.persist(trx);            
+                    /*try {
+                        Thread.sleep(new Random().nextInt(5000));
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ActividadBeans.class.getName()).log(Level.SEVERE, null, ex);
+                    }                */        
+                    Traza trx01 = new Traza(tx.toString(),estudiante.getDocumento(), actividad.getId(), TrazaTipo.A02INTACT.toString());
+                    fecha.add(Calendar.MINUTE, 1);
+                    trx01.setFecha(fecha.getTime());
+                    em.persist(trx01);
+                    /*try {
+                        Thread.sleep(new Random().nextInt(5000));
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ActividadBeans.class.getName()).log(Level.SEVERE, null, ex);
+                    }*/                       
+                    Traza trx02 = new Traza(tx.toString(),estudiante.getDocumento(), actividad.getId(), TrazaTipo.A02INTACT.toString());
+                    fecha.add(Calendar.MINUTE, 1);
+                    trx02.setFecha(fecha.getTime());
+                    em.persist(trx02);
+                    /*try {
+                        Thread.sleep(new Random().nextInt(5000));
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ActividadBeans.class.getName()).log(Level.SEVERE, null, ex);
+                    }*/                        
+                    Traza trx03 = new Traza(tx.toString(),estudiante.getDocumento(), actividad.getId(), TrazaTipo.A03OKACT.toString());
+                    fecha.add(Calendar.MINUTE, 20);
+                    trx03.setFecha(fecha.getTime());                    
+                    em.persist(trx03);
+            
+                    
+                }
+            }            
+        }
+        em.getTransaction().commit();                                
     }
 }
 

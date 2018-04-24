@@ -31,17 +31,14 @@ public class Pregunta implements Serializable {
     @Column
     private String descripcion;
     @Column
-    private String respuesta;
-    @Column
-    private String nivel;
+    private String respuesta;    
 
     public Pregunta() {
     }
 
-    public Pregunta(String descripcion, String respuesta, String nivel) {
+    public Pregunta(String descripcion, String respuesta) {
         this.descripcion = descripcion;
-        this.respuesta = respuesta;
-        this.nivel = nivel;
+        this.respuesta = respuesta;        
     }
            
     public void setId(Long id) {
@@ -66,14 +63,5 @@ public class Pregunta implements Serializable {
 
     public String getRespuesta() {
         return respuesta;
-    }
-
-    public void setNivel(String nivel) {
-        this.nivel = nivel;
-    }
-
-    public String getNivel() {
-        return nivel;
-    }
-        
+    }        
 }

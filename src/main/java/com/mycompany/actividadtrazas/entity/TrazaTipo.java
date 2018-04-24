@@ -13,9 +13,13 @@ public enum TrazaTipo {
     INICIO,
     FIN,
     INTENTO,
-    ACIERTO,
+    ACIERTO,        
     
     A01INIACT,//Inicio de actividad
     A02INTACT,//Intento actividad
-    A03OKACT//OK Actividad
+    A03OKACT,//OK Actividad
+    
+    //ACTIVIDAD
+    A10INITIEMPO,
+    A10FINTIEMPO    
 }

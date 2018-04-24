@@ -31,7 +31,7 @@ public class ActividadRest {
     @Inject
     private ActividadBeans bean;        
     
-    @GET
+    /*@GET
     @Path("nivel")
     @Produces(value = MediaType.APPLICATION_JSON)
     public Response getNivelListado(){
@@ -43,24 +43,29 @@ public class ActividadRest {
     @Produces(value = MediaType.APPLICATION_JSON)
     public Response getActividadListado(@QueryParam("Nivel") String nivel){
         return Response.ok(bean.getActividades(nivel).getJsonArray("actividad"), MediaType.APPLICATION_JSON).build();
-    }
+    }*/
     
+    /**
+     * Obtiene las pregntas de una actividad
+     * @param id
+     * @param documento
+     * @param session
+     * @return 
+     */
     @GET
-    @Path("actividadByID/{id}")
+    @Path("actividadbyid/{id}")
     @Produces(value = MediaType.APPLICATION_JSON)
-    public Response getActividadPreguntaListado(@PathParam("id") Long id){
+    public Response getActividadPreguntaListado(@PathParam("id") Long id,@QueryParam("documento")String documento,@QueryParam("session") String session){
         //Inicializa tiempo de actividad
-        return Response.ok(bean.getPreguntas(id), MediaType.APPLICATION_JSON).build();
+        return Response.ok(bean.getPreguntas(id,documento,session), MediaType.APPLICATION_JSON).build();
     }
     
     @POST
     @Path("validar/{actividad}")
     @Consumes(value = MediaType.APPLICATION_JSON)
     @Produces(value = MediaType.APPLICATION_JSON)
-    public Response getActividadValidar(@PathParam("actividad") Long actividad, List<RespuestaActividad> listado){    
-        GenericEntity<List<RespuestaActividad>> entity = new GenericEntity<List<RespuestaActividad>>(bean.Validar(actividad, listado)) {};
+    public Response getActividadValidar(@PathParam("actividad") Long actividad,@PathParam("documento") String documento,@PathParam("session") String session, List<RespuestaActividad> listado){            
+        GenericEntity<List<RespuestaActividad>> entity = new GenericEntity<List<RespuestaActividad>>(bean.Validar(documento,session,actividad, listado)) {};
         return Response.ok(entity, MediaType.APPLICATION_JSON).build();
-    }
-    
-    
+    }        
 }
