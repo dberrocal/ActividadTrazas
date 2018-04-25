@@ -26,20 +26,15 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
-import java.util.stream.Collectors;
 import static java.util.stream.Collectors.groupingBy;
-import java.util.stream.Stream;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import javax.json.JsonValue;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -58,6 +53,54 @@ public class TrazaBean {
     @PersistenceUnit(name = "DB")
     private EntityManagerFactory emf;
     private long sumMinutos = 0L;
+        
+    public void init(){
+        System.out.println("INIT");
+        
+        Secuencia sc = new Secuencia();
+        sc.setDescripcion("Actividad 001");
+        sc.setNivel("A1");
+        sc.setNumero(2);                
+        
+        EntityManager em = emf.createEntityManager();        
+        List<Pregunta> lista = new ArrayList<>();
+        em.getTransaction().begin();
+        for(Pregunta p : Arrays.asList(
+                new Pregunta("Alberto ESPACIO (drive) to school bus everyday","A") ,
+                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A")
+        )){            
+            //em.persist(p);
+            lista.add(p);
+        }
+        
+        List<Actividad> activiades = new ArrayList<>();
+        
+        Actividad actividad = new Actividad();
+        actividad.setDescripcion("Tarea-01");
+        actividad.setNivel("B1");
+        actividad.setPregunta(lista);
+        actividad.setSequencia(sc);
+        activiades.add(actividad);
+        //em.persist(actividad);
+        
+        Actividad actividad2 = new Actividad();
+        actividad2.setDescripcion("Tarea-02");
+        actividad2.setNivel("B2");
+        actividad2.setPregunta(lista);
+        actividad2.setSequencia(sc);
+        activiades.add(actividad2);
+        
+        sc.setActividades(activiades);
+        
+        em.persist(sc);
+        
+        em.getTransaction().commit();
+        
+        InsertarEstudiantes();
+        InsertarTrazas();
+    }
     
     public JsonArray getTrazas() {
 
@@ -133,6 +176,7 @@ public class TrazaBean {
         Set<TareaTupla> keySet = estdianteActividades.keySet();
 
         keySet.forEach((documento) -> {
+            
             List<Traza> lista = estdianteActividades.get(documento);
 
             Map<String, List<Traza>> trazaactaividad = traza.stream().collect(groupingBy(Traza::getActividadnombre));
@@ -202,6 +246,17 @@ public class TrazaBean {
             em.persist(tz);            
         }
         em.getTransaction().commit();
+    }
+    
+    public void getTT(String grupo, Date fechaInicial, Date fechaFinal){
+        EntityManager em = emf.createEntityManager();        
+        
+        List<Traza> traza = em.createNamedQuery(Traza.REPORTE)
+                //.setParameter("grupo", grupo)
+                .setParameter("fi", fechaInicial)
+                .setParameter("ff", fechaFinal)
+                .getResultList();
+        
     }
     
     private void InsertarEstudiantes(){
