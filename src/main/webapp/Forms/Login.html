@@ -55,23 +55,16 @@
                 </p>
                 <form onsubmit="return false" id="Login">
                     <div class="col-md-12">
+                        <br>
                         <div class="form-group">
-                            <label class="control-label text-left col-md-12">N° documento</label>
+                            <label class="control-label text-left col-md-12" style="margin-bottom: 10px">N° documento</label>
+                            <br>
                             <input class="form-control" type="number" placeholder="Ej: 123456789"  id="DocumentoLogin" />
                         </div>
                         <div class="form-group">
-                            <button class="button f-btn"   id="Login" onclick ="ValidarLogin2($('#DocumentoLogin').val())">Ingresar </button>
+                            <button class="button f-btn"  style="margin-left: 29%"  id="Login" onclick ="ValidarLogin($('#DocumentoLogin').val())">Ingresar </button>
                         </div>
                     </div>
-<!--                    <ul>
-                        <li>
-                            <input type="number" placeholder="Ej: 123456789"  id="DocumentoLogin" />
-                        </li>
-                        
-                        <li>
-                            <button class="button col-xs-6 col-md-3"  style="width: 104%" id="Login" onclick ="ValidarLogin2($('#DocumentoLogin').val())">Ingresar </button>
-                        </li>
-                    </ul>-->
                 </form>
             </div>
             <!--/#login.form-action-->
@@ -80,22 +73,22 @@
                 <p>
                     Por favor diligencie todos los campos
                 </p>
-                <form>
+                <form  onsubmit="return false" id="Registro">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="control-label text-left col-md-12">Documento</label>
-                            <input type="text"   id="DocumentoRegistro"/>
+                            <label class="control-label text-left col-md-12" style="margin-bottom: 10px">Documento</label>
+                            <input type="number" placeholder="Ej: 123456789"  id="DocumentoRegistro"/>
                         </div>
                         <div class="form-group">
-                            <label class="control-label text-left col-md-12">Nombres y apellidos</label>
+                            <label class="control-label text-left col-md-12" style="margin-bottom: 10px">Nombres y apellidos</label>
                             <input type="text"  id="Nombres" />
                         </div>
                         <div class="form-group">
-                            <label class="control-label text-left col-md-12">Curso</label>
+                            <label class="control-label text-left col-md-12" style="margin-bottom: 10px">Curso</label>
                             <input type="text"  id="Curso"  style="width: 100%"/>
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Registrar" class="button f-btn" id ="Registrar" />
+                            <button class="button f-btn"  style="margin-left: 29%" id="Login" onclick ="Registrar($('#DocumentoRegistro').val(),$('#Nombres').val(), $('#Curso').val())">Registrar </button>
                         </div>
                     </div>
                     

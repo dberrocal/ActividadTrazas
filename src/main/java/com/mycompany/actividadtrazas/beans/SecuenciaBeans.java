@@ -73,72 +73,89 @@ public class SecuenciaBeans implements Serializable {
                         Arrays.asList(
                                 new Actividad("actividad 201",
                                         Arrays.asList(
-                                                new Pregunta("p0210101", "R0210101"),
-                                                new Pregunta("p0210102", "R0210102")
+                                                new Pregunta("Alberto ESPACIO (drive) to school bus everyday","A") ,
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A")
                                 )),
                                 new Actividad("actividad 202",
                                         Arrays.asList(
-                                                new Pregunta("p0120201", "R0110201"),
-                                                new Pregunta("p0120202", "R0110202")                                                
+                                                new Pregunta("Alberto ESPACIO (drive) to school bus everyday","A") ,
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A")
                                         )),
                                 new Actividad("actividad 203",
                                         Arrays.asList(
-                                                new Pregunta("p0120301", "R0110301"),
-                                                new Pregunta("p0120302", "R0110302"),
-                                                new Pregunta("p0120303", "R0110303")
+                                                new Pregunta("Alberto ESPACIO (drive) to school bus everyday","A") ,
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A")
                                         )),
                                 new Actividad("actividad 204",
                                         Arrays.asList(
-                                                new Pregunta("p0120401", "R0110401"),
-                                                new Pregunta("p0120402", "R0110402"),
-                                                new Pregunta("p0120403", "R0110403"),
-                                                new Pregunta("p0120404", "R0110404"),
-                                                new Pregunta("p0120405", "R0110405")
+                                                new Pregunta("Alberto ESPACIO (drive) to school bus everyday","A") ,
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A")
                                         ))
                         )),
                 new Secuencia("Secuencia 03", "A2",
                         Arrays.asList(
                                 new Actividad("actividad 301",
                                         Arrays.asList(
-                                                new Pregunta("p0230101", "R0230101"),
-                                                new Pregunta("p0230102", "R0230102")
+                                                new Pregunta("Alberto ESPACIO (drive) to school bus everyday","A") ,
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A")
                                 )),
                                 new Actividad("actividad 302",
                                         Arrays.asList(
-                                                new Pregunta("p0130201", "R0130201"),
-                                                new Pregunta("p0130202", "R0130202")                                                
+                                                new Pregunta("Alberto ESPACIO (drive) to school bus everyday","A") ,
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A")
                                         )),
                                 new Actividad("actividad 303",
                                         Arrays.asList(
-                                                new Pregunta("p0130301", "R0130301"),
-                                                new Pregunta("p0130302", "R0130302"),
-                                                new Pregunta("p0130303", "R0130303")
+                                                new Pregunta("Alberto ESPACIO (drive) to school bus everyday","A") ,
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A")
                                         )),
                                 new Actividad("actividad 304",
                                         Arrays.asList(
-                                                new Pregunta("p0130401", "R0130401"),
-                                                new Pregunta("p0130402", "R0130402")                                                
+                                                new Pregunta("Alberto ESPACIO (drive) to school bus everyday","A") ,
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A")
                                         ))
                         )),
                 new Secuencia("Secuencia 04", "A2",
                         Arrays.asList(
                                 new Actividad("actividad 401",
                                         Arrays.asList(
-                                                new Pregunta("p0240101", "R0240101"),
-                                                new Pregunta("p0240102", "R0240102")
+                                                new Pregunta("Alberto ESPACIO (drive) to school bus everyday","A") ,
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A")
                                 ))
                         )),
                 new Secuencia("Secuencia 05", "B1",
                         Arrays.asList(
                                 new Actividad("actividad 501",
                                         Arrays.asList(
-                                                new Pregunta("p0250101", "R0240101"),
-                                                new Pregunta("p0250102", "R0240102")
+                                                new Pregunta("Alberto ESPACIO (drive) to school bus everyday","A") ,
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A")
                                 )),
                                 new Actividad("actividad 502",
                                         Arrays.asList(
-                                                new Pregunta("p0250201", "R0240101"),
-                                                new Pregunta("p0250202", "R0240102")
+                                                new Pregunta("Alberto ESPACIO (drive) to school bus everyday","A") ,
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A"),
+                                                new Pregunta("Sandy ESPACIO (forget) her homework very often.","A")
                                 ))
                         ))
         );

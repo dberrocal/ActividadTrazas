@@ -7,6 +7,7 @@ General = {
 General.appConst ={
     
     defaultNotificationType : "",
+    defaultNotificationElment:  "popupNotification",
 }
 General.controls ={
      SetWindows: function (elementoID, width, height, title, onClose) {
@@ -33,7 +34,15 @@ General.controls ={
                 span.id = notificationElmentId;
                 document.body.appendChild(span);
             }
-            var popupKendo = $("#" + notificationElmentId).kendoNotification().data("kendoNotification");
+            var popupKendo = $("#" + notificationElmentId).kendoNotification({//
+            position: {
+                           // pinned: true,
+                            top: 30,
+                            right: 30
+                        },
+                        //autoHideAfter: 0,
+                        stacking: "down",
+                    }).data("kendoNotification");
             popupKendo.show(message, tipo)
         }
         catch (err) {

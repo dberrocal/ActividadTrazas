@@ -50,22 +50,8 @@ Login.controls ={
     }
 }
 
-Login.util ={
-    
-    ValidarLogin: function ()
-    {
-       alert("llego") ;
-//        if (documento!= ""){
-//          
-//            General.controls.ShowGeneralMessage("Login","Ingreso");
-//        }else{
-//          
-//           General.controls.ShowGeneralMessage("Login","Debe ingresar el documento de identidad");
-//        }
-    }
-}
 
-  ValidarLogin2= function (documento)
+  ValidarLogin= function (documento)
   {
      
         if (documento!= ""){
@@ -87,6 +73,17 @@ Login.util ={
           
            General.controls.ShowGeneralMessage("Login","Debe ingresar el documento de identidad");
         }
+  },
+  
+  
+  Registrar = function (documento, nombre, curso)
+  {
+         if (documento!= "" && nombre != "" && curso != ""){
+             General.controls.ShowGeneralMessage("Login","Registro exitoso. Para acceder debe iniciar sesion");
+         }else{
+               General.controls.ShowGeneralMessage("Login","Debe diligenciar todos los campos");
+         }
+      
   }
 
 function InicioLogin (){
