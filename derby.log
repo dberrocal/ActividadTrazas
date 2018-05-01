@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Wed Apr 25 18:10:32 COT 2018:
+ Iniciando instancia a816c00e-0162-ff12-9939-00000556fc48 de Derby, versión The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): 
+en el directorio de base de datos C:\Users\Daniel\AppData\Local\Temp\gfembed869226300170458434tmp\lib\databases\ejbtimer con el cargador de clases sun.misc.Launcher$AppClassLoader@73d16e93
+Cargado desde file:/C:/Users/Daniel/.m2/repository/fish/payara/extras/payara-micro/4.1.152.1/payara-micro-4.1.152.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_31-b13
+user.dir=C:\Users\Daniel\Documents\ActividadTrazas
+os.name=Windows 7
+os.arch=amd64
+os.version=6.1
+derby.system.home=null
+Cargador de clases de base de datos iniciado - derby.database.classpath=''

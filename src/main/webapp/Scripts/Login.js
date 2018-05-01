@@ -59,15 +59,22 @@ Login.controls ={
           var prueba ="123"
           var docente ="456"
           
-          if (documento != prueba && documento != docente){
-                 General.controls.ShowGeneralMessage("Login","Usuario incorrecto");
-          }else{
-              if(documento == "456"){
-                   window.location.href = "../Forms/ReporteTiempo.html";
-              }else{
-                   window.location.href = "../Forms/SeleccionActividad.html";
-             }
-          }
+          $.ajax({
+            type: "POST",
+            url: 'login',
+            //dataType: "json",
+            success: function (r) {
+                if (r.inicio) {
+                    if (r.rol === 'p')
+                        window.location.href = "Forms/ReporteTiempo.jsp";
+                    else
+                        window.location.href = "Forms/SeleccionActividad.jsp";
+                } else
+                    General.controls.ShowGeneralMessage("Login", "Debe ingresar el documento de identidad");
+            },
+            error: function(){},
+            data: "documento="+documento
+        });
           
         }else{
           

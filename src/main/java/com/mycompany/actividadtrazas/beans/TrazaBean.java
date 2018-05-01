@@ -50,7 +50,8 @@ public class TrazaBean {
     @Inject
     private ActividadBeans ac;
 
-    @PersistenceUnit(name = "DB")
+    //@PersistenceUnit(name = "DB")
+    @PersistenceUnit(name = "DBRemoto")   
     private EntityManagerFactory emf;
     private long sumMinutos = 0L;
         
@@ -216,7 +217,7 @@ public class TrazaBean {
             //jsonrespuesta.add(json);
         });
         return jsonrespuesta.build();
-    }   
+    }       
     
     public void TrazaTiempo(String documento,String session,Long actividadId,TrazaTipo tipo){        
         EntityManager em = emf.createEntityManager();        

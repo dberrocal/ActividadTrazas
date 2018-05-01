@@ -23,10 +23,12 @@ import javax.persistence.Table;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Estudiante.Todos", query = "SELECT a FROM Estudiante a"),
-    @NamedQuery(name = "Actividad.Grupos", query = "SELECT a FROM Estudiante a WHERE a.grupo = :grupo")
+    @NamedQuery(name = "Estudiante.Grupos", query = "SELECT a FROM Estudiante a WHERE a.grupo = :grupo"),
+    @NamedQuery(name = "Estudiante.Documento", query = "SELECT a FROM Estudiante a WHERE a.documento = :documento")
 })
 public class Estudiante implements Serializable {
     public static String TODOS = "Estudiante.Todos";
+    public static String DOCUMENTO = "Estudiante.Documento";
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;

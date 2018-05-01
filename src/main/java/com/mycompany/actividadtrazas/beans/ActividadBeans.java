@@ -20,8 +20,7 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -31,8 +30,11 @@ import javax.persistence.PersistenceUnit;
 @ApplicationScoped
 public class ActividadBeans implements Serializable{
     
-    @PersistenceUnit(name = "DB")    
-    private EntityManagerFactory emf;
+    //@PersistenceUnit(name = "DB")
+    //@PersistenceUnit(name = "DBRemoto")   
+    //private EntityManagerFactory emf;
+    @PersistenceContext(name = "DBRemoto")
+    private EntityManager em;
     
     @Inject
     private TrazaBean tzean;        
@@ -40,7 +42,7 @@ public class ActividadBeans implements Serializable{
     //Peguntas de actividad
     public JsonArray getPreguntas(Long actividadId, String documento, String session){
         
-        EntityManager em = emf.createEntityManager();        
+        //EntityManager em = emf.createEntityManager();        
         Actividad actividad = em.find(Actividad.class, actividadId);
         JsonArrayBuilder jarray = Json.createArrayBuilder();
         actividad.getPregunta().forEach((p)->{
@@ -59,7 +61,7 @@ public class ActividadBeans implements Serializable{
         
     public JsonObject getActividades(String nv){
         
-        EntityManager em = emf.createEntityManager();        
+        //EntityManager em = emf.createEntityManager();        
         List<Actividad> actividad = null;
         if(nv == null)
             actividad = em.createNamedQuery(Actividad.TODOS,Actividad.class).getResultList();                        
@@ -103,7 +105,7 @@ public class ActividadBeans implements Serializable{
     }
     
     public List<RespuestaActividad> Validar(String documento,String session,Long actividadId,List<RespuestaActividad> listado){
-        EntityManager em = emf.createEntityManager();                        
+        //EntityManager em = emf.createEntityManager();                        
         for(RespuestaActividad r : listado){
             Pregunta p = em.find(Pregunta.class, r.getPregunta());
             r.setValido(p.getRespuesta().equalsIgnoreCase(r.getRespuesta()));                        

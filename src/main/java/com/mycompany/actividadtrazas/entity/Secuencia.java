@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,7 +44,7 @@ public class Secuencia implements Serializable {
     @NotNull
     @Column(nullable = false)
     private Integer numero;
-    @OneToMany(mappedBy = "sequencia",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "sequencia",cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     private List<Actividad> actividades;
 
     public Secuencia() {
@@ -54,6 +55,9 @@ public class Secuencia implements Serializable {
         this.nivel = nivel;
         this.numero = actividades.size();
         this.actividades = actividades;
+        actividades.stream().forEach((tem)->{
+            tem.setSequencia(this);
+        });                    
     }        
     
     public Long getId() {

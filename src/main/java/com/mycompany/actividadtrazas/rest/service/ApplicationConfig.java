@@ -32,5 +32,6 @@ public class ApplicationConfig extends Application{
         resources.add(com.mycompany.actividadtrazas.rest.service.ReporteRest.class);
         resources.add(com.mycompany.actividadtrazas.rest.service.SecuenciaRest.class);
         resources.add(com.mycompany.actividadtrazas.rest.service.TrazaRest.class);
+        resources.add(com.mycompany.actividadtrazas.rest.service.UsuarioRest.class);
     }
 }

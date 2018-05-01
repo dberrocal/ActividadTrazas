@@ -18,14 +18,12 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import static java.util.stream.Collectors.groupingBy;
-import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 
 /**
  *
@@ -45,17 +43,17 @@ public class ConecinJunitTest {
     }
 
     // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
+    // The methods must be annotated with annotation //@Test. For example:
     //
-    @Test
+    //@Test
     public void testConexion() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("DB");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("DBRemoto");
         Assert.assertTrue(emf.isOpen());
     }
     
-    @Test
+    //@Test
     public void testInsertInto() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("DB");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("DBRemoto");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         /*for(Pregunta p : Arrays.asList(new Pregunta("", "", ""),new Pregunta("", ""),new Pregunta("", ""),new Pregunta("", ""),new Pregunta("", ""))){
@@ -67,7 +65,7 @@ public class ConecinJunitTest {
         
     public void insertarT(){
         System.out.println("INIT");
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("DB");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("DBRemoto");
         EntityManager em = emf.createEntityManager();
         
         Secuencia sc = new Secuencia();
@@ -108,7 +106,7 @@ public class ConecinJunitTest {
     public void InsertarEstudianteTest(){
         
         System.out.println("ESTUDIANTE");
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("DB");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("DBRemoto");
         EntityManager em = emf.createEntityManager();        
         
         List<Estudiante> lista = Arrays.asList(
@@ -132,13 +130,13 @@ public class ConecinJunitTest {
         em.getTransaction().commit();
     }
     
-    @Test   
+    ////@Test   
     public void Z99InsertarTramas(){
         insertarT();
         InsertarEstudianteTest();
         System.out.println("ASA");
         
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("DB");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("DBRemoto");
         EntityManager em = emf.createEntityManager();                
         
         List<Secuencia> secuencias = em.createNamedQuery(Secuencia.TODOS).getResultList();

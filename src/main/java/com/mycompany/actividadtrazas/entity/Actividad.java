@@ -20,8 +20,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -42,9 +42,9 @@ public class Actividad implements Serializable {
     @Column
     private String descripcion;
     @Column
-    private String nivel;
+    private String nivel;    
     @JoinColumn(name = "SECUENCIA")
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Secuencia sequencia;    
     @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     @JoinTable(name = "actividad_pregunta",joinColumns = @JoinColumn(name = "actividad_id"),inverseJoinColumns = {@JoinColumn(name = "pregunta_id")})
