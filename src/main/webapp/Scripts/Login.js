@@ -85,13 +85,16 @@ Login.controls ={
   
   Registrar = function (documento, nombre, curso)
   {
-         if (documento!= "" && nombre != "" && curso != ""){
-             General.controls.ShowGeneralMessage("Login","Registro exitoso. Para acceder debe iniciar sesion");
-         }else{
-               General.controls.ShowGeneralMessage("Login","Debe diligenciar todos los campos");
-         }
-      
+      General.Service.SendPost('http://localhost:8080/ActividadTrazas/webresources/usuario/usuarios',
+        {documento:documento,nombre:nombre,curso:curso,rol:'estudiante'},
+        function (r) {
+            General.controls.ShowGeneralMessage("Login", "Ok");
+        },
+        function(){}
+      )      
   }
+  
+  
 
 function InicioLogin (){
   // constants
