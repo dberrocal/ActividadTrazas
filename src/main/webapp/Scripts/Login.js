@@ -85,6 +85,7 @@ Login.controls ={
   
   Registrar = function (documento, nombre, curso)
   {
+      
       General.Service.SendPost('http://localhost:8080/ActividadTrazas/webresources/usuario/usuarios',
         {documento:documento,nombre:nombre,curso:curso,rol:'estudiante'},
         function (r) {
