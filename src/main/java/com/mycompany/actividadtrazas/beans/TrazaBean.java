@@ -26,8 +26,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static java.util.stream.Collectors.groupingBy;
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,6 +41,12 @@ import javax.json.JsonObjectBuilder;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
 
 /**
  *
@@ -50,9 +59,13 @@ public class TrazaBean {
     @Inject
     private ActividadBeans ac;
 
-    //@PersistenceUnit(name = "DB")
-    @PersistenceUnit(name = "DBRemoto")   
-    private EntityManagerFactory emf;
+    @Inject
+    @PostgresqlSQLDatabase
+    private EntityManager em;
+    
+    @Resource
+    private UserTransaction tx;
+    
     private long sumMinutos = 0L;
         
     public void init(){
@@ -62,8 +75,7 @@ public class TrazaBean {
         sc.setDescripcion("Actividad 001");
         sc.setNivel("A1");
         sc.setNumero(2);                
-        
-        EntityManager em = emf.createEntityManager();        
+                   
         List<Pregunta> lista = new ArrayList<>();
         em.getTransaction().begin();
         for(Pregunta p : Arrays.asList(
@@ -106,7 +118,7 @@ public class TrazaBean {
     public JsonArray getTrazas() {
 
         JsonArrayBuilder jsonrespuesta = Json.createArrayBuilder();
-        EntityManager em = emf.createEntityManager();
+        
         List<Traza> traza = em.createNamedQuery(Traza.TODOS).getResultList();
 
         Map<TareaTupla, List<Traza>> estdianteActividades = traza.stream()
@@ -160,7 +172,7 @@ public class TrazaBean {
     }
 
     public JsonArray getTrazasReporteTiempo(String grupo, Date fechaInicial, Date fechaFinal) {
-        EntityManager em = emf.createEntityManager();
+        
         List<Traza> traza = em.createNamedQuery(Traza.REPORTE)
                 //.setParameter("grupo", grupo)
                 .setParameter("fi", fechaInicial)
@@ -219,39 +231,48 @@ public class TrazaBean {
         return jsonrespuesta.build();
     }       
     
-    public void TrazaTiempo(String documento,String session,Long actividadId,TrazaTipo tipo){        
-        EntityManager em = emf.createEntityManager();        
-        Traza tz = new Traza(documento, session, actividadId,tipo.toString());
-        em.getTransaction().begin();
-        em.persist(tz);
-        em.getTransaction().commit();
+    public void TrazaTiempo(String documento,String session,String grupo,Long actividadId,TrazaTipo tipo){        
+        
+        try {
+            Traza tz = new Traza(documento, session,grupo, actividadId,tipo.toString());
+            //em.getTransaction().begin();
+            tx.begin();
+            em.persist(tz);
+            tx.commit();
+            //em.getTransaction().commit();
+        } catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException ex) {
+            Logger.getLogger(TrazaBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    public void TrazaIntento(String documento, String session,Long actividadId, List<RespuestaActividad> lista) {
-        
-        EntityManager em = emf.createEntityManager();
+    public void TrazaIntento(String documento, String session,String grupo,Long actividadId, List<RespuestaActividad> lista) {                
 
-        Boolean valida = lista.stream().allMatch(RespuestaActividad::getValido);
-        //Traza acierto
-        em.getTransaction().begin();
-        if (valida) {
-            Traza tz01 = new Traza(documento, session, actividadId, TrazaTipo.ACIERTO.toString());
-            Traza tz02 = new Traza(documento, session, actividadId, TrazaTipo.A10FINTIEMPO.toString());            
-            em.persist(tz01);
-            em.persist(tz02);            
-        } else {
-            Traza tz = new Traza(documento, session, actividadId, TrazaTipo.INTENTO.toString());
-            lista.stream().filter((RespuestaActividad e) -> !e.getValido()).forEach((e) -> {
-                tz.pushError(new TrazaError(tz, e.getPregunta(), e.getRespuesta()));
-            });            
-            em.persist(tz);            
+        try {
+            Boolean valida = lista.stream().allMatch(RespuestaActividad::getValido);
+            //Traza acierto
+            //em.getTransaction().begin();
+            tx.begin();
+            if (valida) {
+                Traza tz01 = new Traza(documento, session,grupo, actividadId, TrazaTipo.ACIERTO.toString());
+                Traza tz02 = new Traza(documento, session,grupo, actividadId, TrazaTipo.A10FINTIEMPO.toString());
+                em.persist(tz01);
+                em.persist(tz02);
+            } else {
+                Traza tz = new Traza(documento, session,grupo, actividadId, TrazaTipo.INTENTO.toString());
+                lista.stream().filter((RespuestaActividad e) -> !e.getValido()).forEach((e) -> {
+                    tz.pushError(new TrazaError(tz, e.getPregunta(), e.getRespuesta()));
+                });            
+                em.persist(tz);
+            }
+            //em.getTransaction().commit();
+            tx.commit();
+        } catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException ex) {
+            Logger.getLogger(TrazaBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        em.getTransaction().commit();
     }
     
     public void getTT(String grupo, Date fechaInicial, Date fechaFinal){
-        EntityManager em = emf.createEntityManager();        
-        
+                
         List<Traza> traza = em.createNamedQuery(Traza.REPORTE)
                 //.setParameter("grupo", grupo)
                 .setParameter("fi", fechaInicial)
@@ -261,7 +282,7 @@ public class TrazaBean {
     }
     
     private void InsertarEstudiantes(){
-        EntityManager em = emf.createEntityManager();                        
+        
         List<Estudiante> lista = Arrays.asList(
                 new Estudiante("A101", "Estudiante A101", "A1"),
                 new Estudiante("A102", "Estudiante A102", "A1"),
@@ -286,8 +307,6 @@ public class TrazaBean {
     
     private void InsertarTrazas(){
                 
-        EntityManager em = emf.createEntityManager();
-        
         List<Secuencia> secuencias = em.createNamedQuery(Secuencia.TODOS).getResultList();
         List<Estudiante> estudiantes = em.createNamedQuery(Estudiante.TODOS).getResultList();
         
@@ -300,7 +319,7 @@ public class TrazaBean {
                     System.out.println(estudiante.getDocumento());
                     Long tx = new Random().nextLong();
                     
-                    Traza trx = new Traza(tx.toString(),estudiante.getDocumento(), actividad.getId(), TrazaTipo.A01INIACT.toString());
+                    Traza trx = new Traza(tx.toString(),estudiante.getDocumento(),"", actividad.getId(), TrazaTipo.A01INIACT.toString());
                     fecha.add(Calendar.MINUTE, -10);
                     trx.setFecha(fecha.getTime());
                     
@@ -310,7 +329,7 @@ public class TrazaBean {
                     } catch (InterruptedException ex) {
                         Logger.getLogger(ActividadBeans.class.getName()).log(Level.SEVERE, null, ex);
                     }                */        
-                    Traza trx01 = new Traza(tx.toString(),estudiante.getDocumento(), actividad.getId(), TrazaTipo.A02INTACT.toString());
+                    Traza trx01 = new Traza(tx.toString(),estudiante.getDocumento(),"", actividad.getId(), TrazaTipo.A02INTACT.toString());
                     fecha.add(Calendar.MINUTE, 1);
                     trx01.setFecha(fecha.getTime());
                     em.persist(trx01);
@@ -319,7 +338,7 @@ public class TrazaBean {
                     } catch (InterruptedException ex) {
                         Logger.getLogger(ActividadBeans.class.getName()).log(Level.SEVERE, null, ex);
                     }*/                       
-                    Traza trx02 = new Traza(tx.toString(),estudiante.getDocumento(), actividad.getId(), TrazaTipo.A02INTACT.toString());
+                    Traza trx02 = new Traza(tx.toString(),estudiante.getDocumento(),"", actividad.getId(), TrazaTipo.A02INTACT.toString());
                     fecha.add(Calendar.MINUTE, 1);
                     trx02.setFecha(fecha.getTime());
                     em.persist(trx02);
@@ -328,7 +347,7 @@ public class TrazaBean {
                     } catch (InterruptedException ex) {
                         Logger.getLogger(ActividadBeans.class.getName()).log(Level.SEVERE, null, ex);
                     }*/                        
-                    Traza trx03 = new Traza(tx.toString(),estudiante.getDocumento(), actividad.getId(), TrazaTipo.A03OKACT.toString());
+                    Traza trx03 = new Traza(tx.toString(),estudiante.getDocumento(),"", actividad.getId(), TrazaTipo.A03OKACT.toString());
                     fecha.add(Calendar.MINUTE, 20);
                     trx03.setFecha(fecha.getTime());                    
                     em.persist(trx03);

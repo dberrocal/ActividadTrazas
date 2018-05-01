@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -32,8 +33,12 @@ public class SecuenciaBeans implements Serializable {
 
     @PersistenceUnit(name = "DB")
     private EntityManagerFactory emf;
+    
+    @Inject
+    @PostgresqlSQLDatabase
+    private EntityManager em;
 
-    @PostConstruct
+    
     private void init() {
         EntityManager em = emf.createEntityManager();
         
@@ -170,7 +175,7 @@ public class SecuenciaBeans implements Serializable {
     //Secuencias niveles
     public JsonObject getSecuencias() {
 
-        EntityManager em = emf.createEntityManager();
+        //EntityManager em = emf.createEntityManager();
 
         List<Secuencia> secuencia = em.createNamedQuery(Secuencia.TODOS, Secuencia.class).getResultList();
 
@@ -200,7 +205,7 @@ public class SecuenciaBeans implements Serializable {
     //Secuencias por niveles
     public JsonObject getSecuencias(String nv) {
 
-        EntityManager em = emf.createEntityManager();
+        //EntityManager em = emf.createEntityManager();
 
         List<Secuencia> secuencia = em.createNamedQuery(Secuencia.NIVEL, Secuencia.class).setParameter("nivel", nv).getResultList();
 
@@ -228,7 +233,7 @@ public class SecuenciaBeans implements Serializable {
     }
 
     public JsonObject getActividades(Long secuenciaId) {
-        EntityManager em = emf.createEntityManager();
+        //EntityManager em = emf.createEntityManager();
 
         Secuencia secuencia = em.find(Secuencia.class, secuenciaId);
 

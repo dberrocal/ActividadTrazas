@@ -30,10 +30,11 @@ import javax.persistence.PersistenceContext;
 @ApplicationScoped
 public class ActividadBeans implements Serializable{
     
-    //@PersistenceUnit(name = "DB")
-    //@PersistenceUnit(name = "DBRemoto")   
-    //private EntityManagerFactory emf;
-    @PersistenceContext(name = "DBRemoto")
+    @Inject
+    private UsuarioSession usuario;
+    
+    @Inject
+    @PostgresqlSQLDatabase
     private EntityManager em;
     
     @Inject
@@ -54,7 +55,7 @@ public class ActividadBeans implements Serializable{
         });
         
         //Insertamos traza de inicio actividad
-        tzean.TrazaTiempo(documento, session, actividadId, TrazaTipo.A10INITIEMPO);
+        tzean.TrazaTiempo(usuario.getDocumento(), usuario.getSesion(), usuario.getGrupo(),actividadId, TrazaTipo.A10INITIEMPO);
         
         return jarray.build();
     }
@@ -110,7 +111,7 @@ public class ActividadBeans implements Serializable{
             Pregunta p = em.find(Pregunta.class, r.getPregunta());
             r.setValido(p.getRespuesta().equalsIgnoreCase(r.getRespuesta()));                        
         }                
-        tzean.TrazaIntento(documento, session, actividadId, listado);
+        tzean.TrazaIntento(usuario.getDocumento(), usuario.getSesion(),usuario.getGrupo(), actividadId, listado);
         
         return listado;
     }           

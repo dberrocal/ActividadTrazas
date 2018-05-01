@@ -6,6 +6,7 @@
 package com.mycompany.actividadtrazas.beans;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -22,6 +23,8 @@ public class UsuarioSession implements Serializable{
     private String documento;
     private String grupo;
 
+    private String sesion;
+    
     public UsuarioSession() {
     }   
     
@@ -30,6 +33,8 @@ public class UsuarioSession implements Serializable{
         this.nombre = nombre;
         this.documento = documento;
         this.grupo = grupo;
+        
+        this.sesion = String.valueOf(Calendar.getInstance().getTimeInMillis());
     }
 
     public String getDocumento() {
@@ -46,5 +51,9 @@ public class UsuarioSession implements Serializable{
 
     public String getRol() {
         return rol;
+    }        
+
+    public String getSesion() {
+        return sesion;
     }        
 }

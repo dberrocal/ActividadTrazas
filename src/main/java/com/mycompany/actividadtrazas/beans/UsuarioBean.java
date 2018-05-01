@@ -53,7 +53,7 @@ public class UsuarioBean {
     public String inicio(String documento,String password){
         try{
             Usuario tmp = this.getUsuariopoDocumento(documento);                
-            us.setData(tmp.getRol(), tmp.getNombres(), tmp.getDocumento(), "");
+            us.setData(tmp.getRol(), tmp.getNombres(), tmp.getDocumento(), tmp.getCurso());
             if(tmp.getRol().equals("estudiante"))
                 return "{\"inicio\":true,\"rol\":\"e\"}";
             else

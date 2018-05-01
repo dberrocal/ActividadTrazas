@@ -149,7 +149,7 @@ public class ConecinJunitTest {
                     Calendar fecha = Calendar.getInstance();
                     System.out.println(estudiante.getDocumento());
                     Long tx = new Random().nextLong();
-                    Traza trx = new Traza(tx.toString(),estudiante.getDocumento(), actividad.getId(), TrazaTipo.A01INIACT.toString());
+                    Traza trx = new Traza(tx.toString(),estudiante.getDocumento(),"", actividad.getId(), TrazaTipo.A01INIACT.toString());
                     fecha.add(Calendar.MINUTE, -3);
                     trx.setFecha(fecha.getTime());
                     em.persist(trx);            
@@ -158,7 +158,7 @@ public class ConecinJunitTest {
                     } catch (InterruptedException ex) {
                         Logger.getLogger(ActividadBeans.class.getName()).log(Level.SEVERE, null, ex);
                     }                */        
-                    Traza trx01 = new Traza(tx.toString(),estudiante.getDocumento(), actividad.getId(), TrazaTipo.A02INTACT.toString());
+                    Traza trx01 = new Traza(tx.toString(),estudiante.getDocumento(),"", actividad.getId(), TrazaTipo.A02INTACT.toString());
                     trx01.setFecha(fecha.getTime());
                     em.persist(trx01);
                     /*try {
@@ -166,7 +166,7 @@ public class ConecinJunitTest {
                     } catch (InterruptedException ex) {
                         Logger.getLogger(ActividadBeans.class.getName()).log(Level.SEVERE, null, ex);
                     }*/                       
-                    Traza trx02 = new Traza(tx.toString(),estudiante.getDocumento(), actividad.getId(), TrazaTipo.A02INTACT.toString());
+                    Traza trx02 = new Traza(tx.toString(),estudiante.getDocumento(),"", actividad.getId(), TrazaTipo.A02INTACT.toString());
                     trx02.setFecha(fecha.getTime());
                     em.persist(trx02);
                     /*try {
@@ -174,7 +174,7 @@ public class ConecinJunitTest {
                     } catch (InterruptedException ex) {
                         Logger.getLogger(ActividadBeans.class.getName()).log(Level.SEVERE, null, ex);
                     }*/                        
-                    Traza trx03 = new Traza(tx.toString(),estudiante.getDocumento(), actividad.getId(), TrazaTipo.A03OKACT.toString());
+                    Traza trx03 = new Traza(tx.toString(),estudiante.getDocumento(),"", actividad.getId(), TrazaTipo.A03OKACT.toString());
                     trx03.setFecha(fecha.getTime());
                     em.persist(trx03);
             

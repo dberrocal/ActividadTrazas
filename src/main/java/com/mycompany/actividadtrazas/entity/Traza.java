@@ -103,8 +103,9 @@ public class Traza implements Serializable {
         this.tipotraza = tipotraza;
     }
     
-    public Traza(String documento,String sesion, Long actividad, String tipotraza) {                
+    public Traza(String documento,String sesion,String grupo, Long actividad, String tipotraza) {                
         this.sesion = sesion;
+        this.grupo = grupo;
         this.documento = documento;
         this.actividad = new Actividad(actividad);
         this.tipotraza = tipotraza;
