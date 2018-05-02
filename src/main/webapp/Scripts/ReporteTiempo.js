@@ -81,6 +81,7 @@ ReporteTiempo.controls ={
                             nombre: { type: "string" },
                             fecha: { type: "date" },
                             duracion: { type: "number" },
+                            
                         }
                     }
                 },

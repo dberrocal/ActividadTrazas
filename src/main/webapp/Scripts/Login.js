@@ -70,7 +70,7 @@ Login.controls ={
                     else
                         window.location.href = "Forms/SeleccionActividad.jsp";
                 } else
-                    General.controls.ShowGeneralMessage("Login", "Debe ingresar el documento de identidad");
+                          General.controls.ShowGeneralMessage("Login", "El documento no existe");
             },
             error: function(){},
             data: "documento="+documento
@@ -78,24 +78,40 @@ Login.controls ={
           
         }else{
           
-           General.controls.ShowGeneralMessage("Login","Debe ingresar el documento de identidad");
+                       General.controls.ShowGeneralMessage("Login", "Debe diligenciar el campo Documento");
         }
+      LimpiarRegistro();
   },
   
   
   Registrar = function (documento, nombre, curso)
   {
-      
+       LimpiarDocLogin();
       General.Service.SendPost('http://localhost:8080/ActividadTrazas/webresources/usuario/usuarios',
         {documento:documento,nombre:nombre,curso:curso,rol:'estudiante'},
         function (r) {
-            General.controls.ShowGeneralMessage("Login", "Ok");
+              General.controls.ShowGeneralMessage("Login","Registro exitoso. Para acceder debe iniciar sesion");
         },
         function(){}
       )      
+  },
+  
+  LimpiarDocLogin = function ()
+  {
+        $('#DocumentoLogin').val("");
+        $('#DocumentoLogin').text("");
+  },
+  
+  LimpiarRegistro = function ()
+  {
+        
+        $('#DocumentoRegistro').val("");
+        $('#Nombres').val("");
+        $('#Curso').val("");
+        $('#DocumentoRegistro').text("");
+        $('#Nombres').text("");
+        $('#Curso').text("");
   }
-  
-  
 
 function InicioLogin (){
   // constants
