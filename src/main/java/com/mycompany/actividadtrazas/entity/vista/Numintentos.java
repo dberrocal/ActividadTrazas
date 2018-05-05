@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Numintentos.findById", query = "SELECT n FROM Numintentos n WHERE n.id = :id")
     , @NamedQuery(name = "Numintentos.findByDocumento", query = "SELECT n FROM Numintentos n WHERE n.documento = :documento")
     , @NamedQuery(name = "Numintentos.findByFecha", query = "SELECT n FROM Numintentos n WHERE n.fecha = :fecha")
-    , @NamedQuery(name = "Numintentos.findByGrupo", query = "SELECT n FROM Numintentos n WHERE n.grupo = :grupo AND t.fecha BETWEEN :inicio AND :fin")
+    , @NamedQuery(name = "Numintentos.findByGrupo", query = "SELECT n FROM Numintentos n WHERE n.grupo = :grupo AND n.fecha BETWEEN :inicio AND :fin")
     , @NamedQuery(name = "Numintentos.findBySecuencia", query = "SELECT n FROM Numintentos n WHERE n.secuencia = :secuencia")
     , @NamedQuery(name = "Numintentos.findByActividad", query = "SELECT n FROM Numintentos n WHERE n.actividad = :actividad")
     , @NamedQuery(name = "Numintentos.findByNumintentos", query = "SELECT n FROM Numintentos n WHERE n.numintentos = :numintentos")})
