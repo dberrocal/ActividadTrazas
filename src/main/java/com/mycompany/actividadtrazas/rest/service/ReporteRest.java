@@ -47,4 +47,23 @@ public class ReporteRest {
         
         return Response.ok(bean.getTrazasReporteTiempo(grupo,fi,ff), MediaType.APPLICATION_JSON).build();
     }
+    
+    @GET
+    @Path("numeroerrores")
+    @Produces(value = MediaType.APPLICATION_JSON)
+    public Response getResporteNumeroError(@QueryParam("grupo") String grupo,
+            @QueryParam("fi")String fechainicio,
+            @QueryParam("ff")String fechafin){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        Date fi = null,ff = null;
+        
+        try {
+            fi = sdf.parse(fechainicio);
+            ff = sdf.parse(fechafin);
+        } catch (ParseException ex) {
+            Logger.getLogger(ReporteRest.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        
+        return Response.ok(bean.getTrazasReporteNumErrores(grupo,fi,ff), MediaType.APPLICATION_JSON).build();
+    }
 }

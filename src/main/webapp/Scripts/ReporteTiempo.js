@@ -80,7 +80,7 @@ ReporteTiempo.controls ={
                             nivel: { type: "string" },
                             nombre: { type: "string" },
                             fecha: { type: "date" },
-                            duracion: { type: "number" },
+                            duracion: { type: "string" },
                         }
                     }
                 },

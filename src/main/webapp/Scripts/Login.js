@@ -87,7 +87,7 @@ Login.controls ={
   {
       
       General.Service.SendPost('http://localhost:8080/ActividadTrazas/webresources/usuario/usuarios',
-        {documento:documento,nombre:nombre,curso:curso,rol:'estudiante'},
+        {documento:documento,nombres:nombre,curso:curso,rol:'estudiante'},
         function (r) {
             General.controls.ShowGeneralMessage("Login", "Ok");
         },

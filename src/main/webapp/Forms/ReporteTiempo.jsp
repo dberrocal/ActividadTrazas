@@ -1,4 +1,10 @@
+<%-- 
+    Document   : ReporteTiempo
+    Created on : 5/05/2018, 04:45:45 AM
+    Author     : Daniel
+--%>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -240,9 +246,9 @@
                             end.min(start.value());
                             
                            var dataGrupo = [
-                                {idGrupo: 1, NombreGrupo: "Grupo 1"},
-                                {idGrupo: 2, NombreGrupo: "Grupo 2"},
-                                {idGrupo: 3, NombreGrupo: "Grupo 3"}
+                                {idGrupo: 'Curso1', NombreGrupo: "Grupo 1"},
+                                {idGrupo: 'Curso2', NombreGrupo: "Grupo 2"},
+                                {idGrupo: 'Curso3', NombreGrupo: "Grupo 3"}
                             ];
                             ReporteTiempo.appConst.TextField = "NombreGrupo";
                             ReporteTiempo.appConst.ValueField= "idGrupo";

@@ -6,12 +6,15 @@
 package com.mycompany.actividadtrazas.entity.vista;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -26,15 +29,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Tiempoactividad.findAll", query = "SELECT t FROM Tiempoactividad t")
     , @NamedQuery(name = "Tiempoactividad.findById", query = "SELECT t FROM Tiempoactividad t WHERE t.id = :id")
     , @NamedQuery(name = "Tiempoactividad.findByDocumento", query = "SELECT t FROM Tiempoactividad t WHERE t.documento = :documento")
-    , @NamedQuery(name = "Tiempoactividad.findByGrupo", query = "SELECT t FROM Tiempoactividad t WHERE t.grupo = :grupo")
+    , @NamedQuery(name = "Tiempoactividad.findByGrupo", query = "SELECT t FROM Tiempoactividad t WHERE t.grupo = :grupo AND t.fecha BETWEEN :inicio AND :fin")
     , @NamedQuery(name = "Tiempoactividad.findByTarea", query = "SELECT t FROM Tiempoactividad t WHERE t.tarea = :tarea")
     , @NamedQuery(name = "Tiempoactividad.findByActividad", query = "SELECT t FROM Tiempoactividad t WHERE t.actividad = :actividad")
     , @NamedQuery(name = "Tiempoactividad.findByHora", query = "SELECT t FROM Tiempoactividad t WHERE t.hora = :hora")
     , @NamedQuery(name = "Tiempoactividad.findByMinuto", query = "SELECT t FROM Tiempoactividad t WHERE t.minuto = :minuto")
     , @NamedQuery(name = "Tiempoactividad.findBySegundo", query = "SELECT t FROM Tiempoactividad t WHERE t.segundo = :segundo")})
 public class Tiempoactividad implements Serializable {
-
+    public static String TIEMPO = "Tiempoactividad.findByGrupo";
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Column(name = "id")
     private Integer id;
@@ -44,6 +48,9 @@ public class Tiempoactividad implements Serializable {
     @Size(max = 255)
     @Column(name = "grupo")
     private String grupo;
+    @Column(name = "fecha")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fecha;    
     @Size(max = 255)
     @Column(name = "tarea")
     private String tarea;
@@ -125,6 +132,14 @@ public class Tiempoactividad implements Serializable {
 
     public void setSegundo(String segundo) {
         this.segundo = segundo;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
     
 }
