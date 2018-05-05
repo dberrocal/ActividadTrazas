@@ -59,6 +59,15 @@
 
                         <label class="control-label text-left col-md-12" style="margin-bottom: 19px"><span > <i>Estudiante </i></span>Maria Perez   <span style="padding-left: 71%" id="tmp_contador"></span>  </label>                       
                      </div>        
+                        <div  id="FinalizoActividad" style="display:none"> 
+                        
+                        <h2>¡Felicidades! a terminado todas las actividades</h2>
+                        <br>
+                         <div class='btn-btn-gropup'>
+                             <button style='margin-left:33%;' class='button' id ='Finalizar' onclick='FinalizarActividad()'> Finalizar </button>
+                         </div>
+                    </div>
+                
                     <ul id="FormActividad">  
                         
                     </ul>
