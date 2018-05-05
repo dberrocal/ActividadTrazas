@@ -80,7 +80,7 @@ public class TrazaBean {
     /**
      * Reporte de actividad, numero de errores por pregunta y actividad
      */
-    public JsonArray getTrazasReporteNumErrores(String grupo, Date fechaInicial, Date fechaFinal) {
+    public JsonArray getTrazasReporteIntentos(String grupo, Date fechaInicial, Date fechaFinal) {
         
         List<Numintentos> traza = em.createNamedQuery(Numintentos.GRUPO)
                 .setParameter("grupo", grupo)

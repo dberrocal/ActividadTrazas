@@ -108,12 +108,75 @@ ReporteTiempo.controls ={
                 { field: "nombre", title: "Nombre",},
                 { field: "nivel", title: "Nivel", /*aggregates: ["sum"] */},
                 { field: "fecha", title: "Fecha",   template: "#= kendo.toString(kendo.parseDate(fecha, 'yyyy-MM-dd'), 'MM/dd/yyyy') #" /*aggregates: ["sum"] */},
-                { field: "duracion", title: "Duracion", aggregates: ["sum"], footerTemplate: "Suma: #= sum#",groupHeaderTemplate: "Suma: #= sum#" }
+                { field: "duracion", title: "Duracion", aggregates: ["sum"], groupHeaderTemplate: "Suma: #= sum#" }
             ]
         });
   
                 
   }
+  
+  GenerarReporteIntentos= function (elementID, grupoID, fechaini, fechafin)
+  {
+         $("#" + elementID).kendoGrid({
+            toolbar: ["excel"],
+            excel: {
+                fileName: "Kendo UI Grid Export.xlsx",
+              //  proxyURL: "https://demos.telerik.com/kendo-ui/service/export",
+                filterable: true
+            },
+            dataSource: {
+                type: "json",
+                transport: {
+                    read: "http://localhost:8080/ActividadTrazas/webresources/reporte/intentos/?grupo=" + grupoID + "&fi=" + fechaini + "&ff=" + fechafin
+                },
+                schema:{
+                    model: {
+                        fields: {
+                            estudiante: { type: "string" },
+                            actividad: { type: "string" },
+                            nivel: { type: "string" },
+                            nombre: { type: "string" },
+                            fecha: { type: "date" },
+                            intentos: { type: "number" },
+                        }
+                    }
+                },
+                pageSize: 7,
+                group: {
+                    field: "actividad", aggregates: [                       
+                        { field: "intetnos", aggregate: "sum"},
+                    ]
+                },
+                aggregate: [
+                //    { field: "actividad", aggregate: "count" },                    
+                    { field: "intentos", aggregate: "sum" },
+                ]
+            },
+            sortable: true,
+            pageable: true,
+            groupable: true,
+            filterable: true,
+            columnMenu: true,
+            reorderable: true,
+            resizable: true,
+            columns: [
+                { field: "estudiante", title: "Estudiante",/* aggregates: ["count"], footerTemplate: "Total estudiante: #=count#", groupFooterTemplate: "Count: #=count#"*/ },
+                { field: "actividad", title: "Actividad", /*aggregates: ["count"], footerTemplate: "Cantidad: #=count#",  groupFooterTemplate: "Cantidad: #= count#" */},
+                { field: "nombre", title: "Nombre",},
+                { field: "nivel", title: "Nivel", /*aggregates: ["sum"] */},
+                { field: "fecha", title: "Fecha",   template: "#= kendo.toString(kendo.parseDate(fecha, 'yyyy-MM-dd'), 'MM/dd/yyyy') #" /*aggregates: ["sum"] */},
+                { field: "intentos", title: "intentos", aggregates: ["sum"], footerTemplate: "Total intentos: #= sum#",groupHeaderTemplate: "Total intentos: #= sum#" }
+            ]
+        });
+  
+                
+  }
+  
+  
+ 
+
+  
+  
   
   
  

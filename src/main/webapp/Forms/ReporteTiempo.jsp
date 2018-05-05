@@ -72,22 +72,26 @@
                             switch (tipoReporte) { 
                                     case "1": 
                                             $("#gridTiempo").show();
-                                            $("#gridErrores").hide();
+                                           // $("#gridErrores").hide();
                                             $("#GenerarTiempo").show();
-                                            $("#GenerarErrores").hide();
+                                         //   $("#GenerarErrores").hide();                                            
+                                            $("#GenerarIntentos").hide();
+                                            $("#gridIntentos").hide();
                                             break;
                                     case "2":
                                             $("#gridTiempo").hide();
-                                            $("#gridErrores").show();
+                                            $("#gridIntentos").show();
                                             $("#GenerarTiempo").hide();
-                                            $("#GenerarErrores").show();
+                                            $("#GenerarIntentos").show();
+                                            
+                                            
                                             break;
-                                    case "3":
-                                            alert('mootools Wins!');
-                                            break;		
-                                    case "4":
-                                            alert('dojo Wins!');
-                                            break;
+//                                    case "3":
+//                                            alert('mootools Wins!');
+//                                            break;		
+//                                    case "4":
+//                                            alert('dojo Wins!');
+//                                            break;
                                     default:
                                             $("#SeleccionReporte").show();
                                             $("#ReporteTiempo").hide();
@@ -104,9 +108,10 @@
                             
                            var dataReporte = [
                                 {idReporte: 1, NombreReporte: "Reporte Tiempo"},
-                                {idReporte: 2, NombreReporte: "Errores"},
-                                {idReporte: 3, NombreReporte: "Nivel de dificultad"},
-                                {idReporte: 4, NombreReporte: "Total"}
+                                {idReporte: 2, NombreReporte: "Numero de intentos"},
+//                                {idReporte: 2, NombreReporte: "Errores"},
+//                                {idReporte: 3, NombreReporte: "Nivel de dificultad"},
+//                                {idReporte: 4, NombreReporte: "Total"}
                             ];
                             ReporteTiempo.appConst.TextField = "NombreReporte";
                             ReporteTiempo.appConst.ValueField= "idReporte";
@@ -127,7 +132,7 @@
     <div class="container" >
 
         <div class="flat-form" >
-            <h2 class="text-center" style="font-weight: bold;padding: 20px">Informe Tiempo Trazas </h2>
+            <h2 class="text-center" style="font-weight: bold;padding: 20px">Informe Trazas </h2>
                       
                 <div class="f-cont-form-act text-center">      
                     <h5 class="text-center">Diligencie todos los campos para generar el informe </h5> 
@@ -138,21 +143,19 @@
                              <div class="col-md-6">   
 
                                      <div class="form-group">
-<!--                                         <label class="control-label text-left col-md-12">Fecha inicial</label>-->
                                          <input id="FechaIni" placeholder="Fecha inicial" type="text" style="width: 100%;"/>
                                      </div>
                                      <div class="form-group">
-<!--                                           <label class="control-label text-left col-md-12">Fecha final</label>-->
                                          <input id="FechaFin" placeholder="Fecha final" type="text" style="width: 100%;"/> 
                                      </div>
                                      <div class="form-group">
-<!--                                           <label class="control-label text-left col-md-12">Grupo</label>-->
                                          <input id="Grupo"  placeholder="Seleccione el grupo" style="width: 100%;"/>
                                      </div>
                                      <div class="form-group">
                                          <button  onclick="TraerInformeTiempo();" id="GenerarTiempo" type="button" class="button"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Generar</button>
-                                         <button  onclick="TraerInformeErrores();" id="GenerarErrores" type="button" class="button"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Generar</button>
-                                         <button  onclick="Regresar();" id="Regresar" style="margin-left: 174%" type="button" class="button"> Regresar</button> 
+<!--                                         <button  onclick="TraerInformeErrores();" id="GenerarErrores" type="button" class="button"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Generar</button> -->
+                                         <button  onclick="TraerInformeIntentos();" id="GenerarIntentos" type="button" class="button"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> Generar</button>
+                                         <button  onclick="Regresar2();" id="Regresar" style="margin-left: 174%" type="button" class="button"> Regresar</button> 
                                      </div>
                                  
 
@@ -162,14 +165,10 @@
                   </div>
                 <div id="gridTiempo" style="display: none"></div>
                 <div id="gridErrores" style="display: none"></div>
+                <div id="gridIntentos" style="display: none"></div>
                 
                 <script>
-                                        function Regresar() {
-                        ALERT("aAAA");
-//                        $("#ReporteTiempo").hide();
-//                        $("#SeleccionReporte").show();
-                        
-                    }
+                    
                     
                     function TraerInformeTiempo() {
                         if($("#FechaIni").val() == "" || $("#FechaFin").val() == "" || $("#Grupo").val() == "" ){
@@ -181,7 +180,12 @@
                         }
                     }
                     
-                    
+                    function Regresar() {
+                        ALERT("aAAA");
+//                        $("#ReporteTiempo").hide();
+//                        $("#SeleccionReporte").show();
+                        
+                    }
                     
                     function TraerInformeErrores() {
                         if($("#FechaIni").val() == "" || $("#FechaFin").val() == "" || $("#Grupo").val() == "" ){
@@ -190,6 +194,31 @@
                         }else{
                         
                             GenerarReporteTiempo("gridErrores", $("#FechaIni").val(), $("#FechaFin").val(), $("#FechaIni").val(),$("#Grupo").val());
+                        }
+                    }
+
+                     function Regresar2() {
+                    
+                            
+                            $("#ReporteTiempo").hide();
+                            $("#SeleccionReporte").show();
+                            $("#gridErrores").html("");
+                            $("#gridTiempo").html("");
+                            $("#FechaIni").val("");
+                            $("#FechaFin").val("");
+//                            $("#Grupo").val("");
+//                            $("#Grupo").text("");
+                         $("#Grupo").data("kendoDropDownList").data([]);
+                    }
+
+
+                    function TraerInformeIntentos() {
+                        if($("#FechaIni").val() == "" || $("#FechaFin").val() == "" || $("#Grupo").val() == "" ){
+                            
+                            General.controls.ShowGeneralMessage("Advertencia", "Debe seleccionar todos los campos");
+                        }else{
+                        
+                            GenerarReporteIntentos("gridIntentos", $("#Grupo").val(), $("#FechaIni").val(), $("#FechaFin").val());
                         }
                     }
 

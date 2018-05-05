@@ -49,9 +49,9 @@ public class ReporteRest {
     }
     
     @GET
-    @Path("numeroerrores")
+    @Path("intentos")
     @Produces(value = MediaType.APPLICATION_JSON)
-    public Response getResporteNumeroError(@QueryParam("grupo") String grupo,
+    public Response getResporteintentos(@QueryParam("grupo") String grupo,
             @QueryParam("fi")String fechainicio,
             @QueryParam("ff")String fechafin){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -64,6 +64,6 @@ public class ReporteRest {
             Logger.getLogger(ReporteRest.class.getName()).log(Level.SEVERE, null, ex);
         }        
         
-        return Response.ok(bean.getTrazasReporteNumErrores(grupo,fi,ff), MediaType.APPLICATION_JSON).build();
+        return Response.ok(bean.getTrazasReporteIntentos(grupo,fi,ff), MediaType.APPLICATION_JSON).build();
     }
 }
